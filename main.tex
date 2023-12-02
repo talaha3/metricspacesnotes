@@ -38,7 +38,7 @@
 \author{Talaha Modak}
 \date{Semester I, 2023/24}
 % END DOCUMENT METADATA
-
+\graphicspath{{./icons/}}
 \newcommand*\githublink{https://github.com/talaha3}
 \newcommand*\subtitle{Consolidated Lecture Notes}
 \urlstyle{same}
@@ -140,12 +140,11 @@
     \raisebox{3pt}{
         \ifstrempty{#2}{
             \textit{No recording}\hspace*{8pt}
-            \fbox{\centering\includegraphics[width=13pt]{../icons/no-video.pdf}}
+            {\centering\includegraphics[width=13pt]{no-video.jpeg}}
         }{
             \textit{#4}\hspace*{8pt}
             \href{https://york.cloud.panopto.eu/Panopto/Pages/#2}
-                {\fbox{\centering\includegraphics[width=13pt]%
-                    {../icons/video.pdf}}}
+                {\centering\includegraphics[width=14pt]{video.jpeg}}
         }%
     }%
     \par #3
