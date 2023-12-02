@@ -31,6 +31,7 @@
     allcolors=blue,
 ]{hyperref}
 \usepackage[nameinlink]{cleveref}
+\usepackage{verbatim}
 
 % BEGIN DOCUMENT METADATA
 
@@ -221,7 +222,7 @@
 \clearpage
 \pagenumbering{arabic}
 \pagestyle{mainbody}
-
+\begin{comment}
 \lecture{Lecture I}{Viewer.aspx?id=c3a52a78-486e-4e1d-88fc-b083009b9766}{
 Lecture One introduces the concept of a \emph{metric} as a generalisation of the notion of distance between two
 points in a set. Three metrics on $\mathbb{R}^2$ and $\mathbb{R}^N$
@@ -499,6 +500,7 @@ This is the only set for which $\inf(S)>\sup(S)$
     \end{proof}
 \end{theorem}
 \pagebreak
+\end{comment}
 
 \lecture{Lecture III}{Viewer.aspx?id=afbe7e12-8494-4fe3-b73f-b08a009bdc46}{
     Lecture Three opens with a counterexample to challenge a common
@@ -507,31 +509,20 @@ This is the only set for which $\inf(S)>\sup(S)$
     \emph{isometric maps}, complemented by a simple example.
 }{\DTMdisplaydate{2023}{10}{03}{Tuesday}}
 
-\begin{example}{Binary Strings}{binary-strings}
+\begin{example}{Hemming Distance}{hemming-distance}
     Despite the examples seen thus far, metric spaces needn't support an
-    associated arithmetic or algebraic structure. For instance, let $ \Sigma =
-    \{ 0, 1 \}^\mathbb{N} $ be the set of binary strings (sequences of zeroes
-    and ones). If $ \sigma = \left(a_n\right)_{n=1}^\infty \in \Sigma $ and $
-    \sigma^\prime = \left(b_n\right)_{n=1}^\infty \in \Sigma $, consider the
-    distance function $ d \colon \Sigma \times \Sigma \to [0, \infty) $ such
-    that
+    associated arithmetic or algebraic structure.\\ For instance, let $ A =
+    \{ 0, 1 \}^\mathbb{N} $ be the set of alphabet and $ A(N)$ be the set of all strings of length $N$. Then, we can define the Hemming distance $H : A(N) \rightarrow [0,\infty]$ to be the number of places where string $x$ differs from string $y$. For example,
     \begin{equation}
-        \left(\sigma, \sigma^\prime\right) \mapsto
-        \begin{cases}
-            0 &\text{ if } a_n = b_n \quad \forall n \in \mathbb{N}; \\
-            1/\min\left\{n \colon a_n \neq b_n\right\} &\text{ otherwise.} \\
-        \end{cases}.
+        H(010,110)=1
     \end{equation}
-    Despite there being no inherent algebraic structure or ordering on $ \Sigma
-    $, $ d $ is a metric that is inversely proportional with the earliest point
-    at which two given binary strings diverge, thus providing a notion of
-    \emph{distance}.
-    \tcblower
-    This example was adapted from Ben Green's University of Oxford
-    \href{https://courses.maths.ox.ac.uk/course/view.php?id=65}{Metric Spaces
-    and Complex Analysis} Michaelmas 2021 course notes.
+    Despite there being no inherent algebraic structure or ordering on $A(n)$,$H$ is a metric that provides a notion of \emph{distance}.
 \end{example}
-\begin{definition}{Norm}{norm}
+\begin{definition}{Vector Spaces and Norm}{norm}
+    A \emph{vector space} $ V $ is a non-empty set which roughly satisfy 
+    \begin{equation}
+        \mu\vec{u} +\lambda\vec{v}\in V \text{ if } \vec{u},\vec{v} \in V \text{ and } \mu,\lambda\in \mathbb{R} \text{ or } \mathbb{C} 
+    \end{equation}
     A \emph{norm} is an abstraction of the absolute value. Suppose that $ V $ is
     a normable vector space. Then $ \vert\vert\cdot\vert\vert \colon V \to
     \mathbb{R} $ is such that, for all $ \vec{x}, \vec{y} \in V $,
@@ -549,24 +540,40 @@ This is the only set for which $\inf(S)>\sup(S)$
     sometimes called the \emph{metric induced by the norm}.
 \end{definition}
 \begin{definition}{Metric Subspace}{metric-subspace}
-    Suppose that $ (X, d) $ and $ (Y, e) $ are metric spaces. We say that $ X $
-    is a \emph{metric subspace} of $ Y $ if $ X \subseteq Y $ and $ d $ is a
-    restriction of $ e $ to $ X \times X $.
+    Let $(X,d)$ be a metric space.\\
+    We can consider $A \subseteq X$ to be a \emph{metric subspace} by restricting $d$ to $A\times A$. That is
+    \begin{equation}
+        d\vert_A: A \times A \rightarrow [0,\infty)
+    \end{equation}
 \end{definition}
+When is the metric space $(X,d)$ the ``same" as $(Y,\hat{d})$?\\
+Perhaps, the most rigid ``same" is an isometry.
 \begin{definition}{Isometric Map}{isometric-map}
-    Suppose that $ (X, d) $ and $ (Y, e) $ are metric spaces, and that $ \phi
-    \colon X \to Y $ is surjective. Then $ \phi $ is called an \emph{isometric
-    map} if and only if $ e(\phi(a), \phi(b)) = d(a, b) $ for all $ a, b \in X
-    $. This will later be used to define the most rigid definition of
-    ``sameness'' for metric spaces.
+    Suppose that $ (X, d) $ and $ (Y, \hat{e}) $ are metric spaces.\\
+    We say that $X$ is \emph{isometric} to $Y$ if and only if $\exists$ $\phi
+    \colon X \to Y $ which is surjective and 
+    \begin{equation}
+        \hat{d}(\phi(a), \phi(b)) = d(a, b) \text{ for all } a, b \in X
+    \end{equation}
+    The function $\phi$ is called an \emph{isometric mapping}.
 \end{definition}
-\begin{example}{Complex Isometry}{complex-isometry}
-    Each $ (a, b) \in \mathbb{R} $ is associated with a unique $ z = a +
-    \mathrm{i}b \in \mathbb{C} $ such that $ \Re(z) = a $ and $ \Im(z) = b $.
-    Notice that $ (a, b) \mapsto a + \mathrm{i}b $ is a bijective map from $
-    \mathbb{R}^2 $ to $ \mathbb{C} $, and hence qualifies as an isometry.
+\begin{example}{\texorpdfstring{$\mathbb{R}^2$ is isometric to $\mathbb{C}$}{Complex Isometry}}{complex-isometry}
+    There exists a surjective (bijective) function $\phi$, where
+    \begin{align*}
+        \phi : \mathbb{R}^2 \rightarrow \mathbb{C}\\
+        \phi(x,y)= x+iy
+    \end{align*}
+    Also, 
+    \begin{align*}
+        d(\phi(x,y),\phi(x',y')) &= \vert (x+iy)-(x'-iy')\vert \\
+        &= \vert (x+x')+(y-y')\vert\\
+        &= \sqrt{(x+x')^2+(y-y')^2}\\
+        &= \vert (x,y)-(x',y')\vert\\
+        &= d((x,y),(x',y'))
+    \end{align*}
+    Hence, $\mathbb{R}^2$ qualifies as an isometry to $\mathbb{C}$.
 \end{example}
-
+\pagebreak
 \lecture{Lecture IV}{Viewer.aspx?id=3a47174e-ed9d-413d-b309-b08c009bdb8e}{
     Lecture Four begins an investigation into the topology of a metric space. In
     particular, we introduce \emph{open and closed balls}, \emph{interior
@@ -792,7 +799,7 @@ This is the only set for which $\inf(S)>\sup(S)$
     since $ \partial A = \emptyset $; thus $ A $ is also open, and is ultimately
     clopen when interpreted as a subspace.
 \end{example}
-
+\begin{comment}
 \lecture{Lecture V}{Viewer.aspx?id=dbcb156d-d828-454f-929d-b091009bf65b}{
     Lecture Five proves multiple important theorems: a set is open if and only
     if its complement is closed; a set is open if and only if we can place an
@@ -1407,5 +1414,6 @@ This is the only set for which $\inf(S)>\sup(S)$
     Alternatively---but equivalently---for any $ x \in X $ and any $ \epsilon >
     0 $, there exists an $ a \in A $ such that $ d(x, a) < \epsilon $.
 \end{definition}
+\end{comment}
 \end{document}
 
