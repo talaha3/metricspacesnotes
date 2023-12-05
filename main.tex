@@ -22,6 +22,7 @@
     firstpageonly,
 ]{draftwatermark}
 \usepackage[en-GB]{datetime2}
+\usepackage{amsmath}
 \usepackage[missing=master]{gitinfo2}
 \usepackage{fancyhdr, anyfontsize, amsthm, mathtools, amssymb, tcolorbox,
     tocloft, titlesec, lastpage, enumitem, tikz}
@@ -222,6 +223,7 @@
 \clearpage
 \pagenumbering{arabic}
 \pagestyle{mainbody}
+
 \begin{comment}
 \lecture{Lecture I}{Viewer.aspx?id=c3a52a78-486e-4e1d-88fc-b083009b9766}{
 Lecture One introduces the concept of a \emph{metric} as a generalisation of the notion of distance between two
@@ -245,8 +247,7 @@ are presented, and a short proof verifies the compliance of the generalised Eucl
     \end{axioms}
     The tuple $ (X, d) $ is a \emph{metric space}.
 \end{definition}
-\begin{definition}{Metrics on \texorpdfstring{$\mathbb{R}^2$}{a
-        2-dimensional real vector space}}{canon-metricsr2}
+\begin{definition}{Metrics on \texorpdfstring{$\mathbb{R}^2$}{a 2-dimensional real vector space}}{canon-metricsr2}
     We can consider three metrics on $ \mathbb{R}^2 $: $ d_1 $, $ d_2 $, and
     $ d_\infty $, each of which have a domain of $ \mathbb{R}^2 \times
     \mathbb{R}^2 $ and a codomain of $ [0, \infty) $:
@@ -265,8 +266,17 @@ are presented, and a short proof verifies the compliance of the generalised Eucl
     which uses the absolute value $ \vert x - y \vert $ to denote distance
     between $ x, y \in \mathbb{R} $.
 \end{definition}
-\begin{definition}{Metrics on \texorpdfstring{$\mathbb{R}^N$}{an
-        N-dimensional real vector space}}{canon-metrics}
+\begin{definition}{Discrete Metric}{discrete-metric}
+    The discrete metric on $\mathbb{R}$ is defined as follows:
+    \begin{equation}
+        d(x,y)=
+        \begin{cases}
+        0 & \text{if } x=y\\
+        1 & \text{if } x\neq y
+        \end{cases}
+    \end{equation}
+\end{definition}
+\begin{definition}{Metrics on \texorpdfstring{$\mathbb{R}^N$}{an N-dimensional real vector space}}{canon-metrics}
     We can consider three metrics on $ \mathbb{R}^N $: $ d_1 $, $ d_2 $, and
     $ d_\infty $, each of which have a domain of $ \mathbb{R}^N \times
     \mathbb{R}^N $ and a codomain of $ [0, \infty) $:
@@ -500,7 +510,7 @@ This is the only set for which $\inf(S)>\sup(S)$
     \end{proof}
 \end{theorem}
 \pagebreak
-\end{comment}
+
 
 \lecture{Lecture III}{Viewer.aspx?id=afbe7e12-8494-4fe3-b73f-b08a009bdc46}{
     Lecture Three opens with a counterexample to challenge a common
@@ -574,8 +584,9 @@ Perhaps, the most rigid ``same" is an isometry.
     Hence, $\mathbb{R}^2$ qualifies as an isometry to $\mathbb{C}$.
 \end{example}
 \pagebreak
+
 \lecture{Lecture IV}{Viewer.aspx?id=3a47174e-ed9d-413d-b309-b08c009bdb8e}{
-    Lecture Four begins an investigation into the topology of a metric space. In
+    Lecture Four begins an investigation into the geometry of a metric space. In
     particular, we introduce \emph{open and closed balls}, \emph{interior
     points}, \emph{boundary points}, and \emph{exterior points}, and define
     \emph{open} and \emph{closed} sets in terms of these concepts. We take an
@@ -687,8 +698,7 @@ Perhaps, the most rigid ``same" is an isometry.
     space. This fact is henceforth denoted by ``$ A^o \coprod \partial A \coprod
     A^e = X $'' for $ A \subseteq X $.
 \end{example}
-\begin{example}{Finding the interior, boundary, and exterior of a
-        set}{int-bound-ext}
+\begin{example}{Finding the interior, boundary, and exterior of a set}{int-bound-ext}
     Consider $ (\mathbb{R}, d) $ with $ A = (0, 1] \subset \mathbb{R} $.
     Intuitively, we can conjecture that $ A^o = (0, 1) $, $ \partial A = \{0,
     1\} $, and $ A^e = \mathbb{R} \setminus (0, 1) = (-\infty, 0) \cup (1,
@@ -732,7 +742,7 @@ Perhaps, the most rigid ``same" is an isometry.
 
             Now, we show that there are no other boundary points of $ A $ in $
             \mathbb{R} $. We know that $ \mathbb{R} = A^o \coprod \partial A
-            \coprod A^e $, hence $ A^o \cup \partial A = \emptyset $, thus $ (0,
+            \coprod A^e $, hence $ A^o \cap \partial A = \emptyset $, thus $ (0,
             1) \not\subset \partial A $. Without loss of generality for $ x < 0
             $, consider points $ x > 1 $. Therefore, there exists an $ \epsilon
             > 0 $ such that $ x = 1 + \epsilon $. Considering $ B(x, \epsilon/2)
@@ -752,10 +762,16 @@ Perhaps, the most rigid ``same" is an isometry.
             as conjectured.
     \end{itemize}
 \end{example}
+\begin{theorem}{Boundaries of the empty set and entire metric space}{bound-empty-metric}
+For an empty set $\emptyset$, its set of boundary points $\partial \emptyset = \emptyset$. \\
+For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
+\end{theorem}
 \begin{definition}{Open, Closed, and Clopen Sets}{open-closed-clopen-sets}
     Let $ (X, d) $ be a metric space. A subset $ A $ of $ X $ is \emph{open} if
-    and only if $ A \cap \partial A = \emptyset $. A subset $ F $ of $ X $ is
-    \emph{closed} if and only if $ \partial F \subseteq F $. Note that a set can
+    and only if $ A \cap \partial A = \emptyset $.\\ 
+    A subset $ F $ of $ X $ is
+    \emph{closed} if and only if $ \partial F \subseteq F $.\\
+    Note that a set can
     be both open and closed: typical examples are the empty set and the entire
     space; these sets are called \emph{clopen}.
 
@@ -787,7 +803,7 @@ Perhaps, the most rigid ``same" is an isometry.
 \end{definition}
 \begin{example}{Subset vs. Subspace}{subset-subspace}
     Consider $ (\mathbb{R}, d) $ with $ A = (0, 1) \cup (1, 2) $. If $ A $ is
-    considered as a \emph{subset} if $ \mathbb{R} $, then $ \partial A = \{0, 1,
+    considered as a \emph{subset} of $ \mathbb{R} $, then $ \partial A = \{0, 1,
     2 \} $. Hence, $ A \cap \partial A = \emptyset $, and $ A $ is open by
     \cref{definition:open-closed-clopen-sets}.  Further, $ A $ is not closed,
     since $ \partial A \not\subseteq A $.
@@ -799,7 +815,8 @@ Perhaps, the most rigid ``same" is an isometry.
     since $ \partial A = \emptyset $; thus $ A $ is also open, and is ultimately
     clopen when interpreted as a subspace.
 \end{example}
-\begin{comment}
+\end{comment}
+
 \lecture{Lecture V}{Viewer.aspx?id=dbcb156d-d828-454f-929d-b091009bf65b}{
     Lecture Five proves multiple important theorems: a set is open if and only
     if its complement is closed; a set is open if and only if we can place an
@@ -810,8 +827,7 @@ Perhaps, the most rigid ``same" is an isometry.
     operations.
 }{\DTMdisplaydate{2023}{10}{10}{Tuesday}}
 
-\begin{theorem}{A subset is open if and only if its complement is
-        closed}{open-subset-closed-complement}
+\begin{theorem}{A subset is open if and only if its complement is closed}{open-subset-closed-complement}
     Consider a set $ A \subseteq X $. Then, $ A $ is open if and only if $ A^c $
     is closed.
     \begin{proof}
@@ -821,7 +837,8 @@ Perhaps, the most rigid ``same" is an isometry.
 
         \iffforward First, suppose that $ A $ is open.  If $ A = \emptyset $,
         then $ A^c = X $. The entire space is known to be clopen, and thus
-        closed. If $ A \neq \emptyset $, then $ A \cap \partial A = \emptyset $,
+        closed.\\
+        If $ A \neq \emptyset $, then $ A \cap \partial A = \emptyset $,
         and $ \partial A \subseteq A^c $.  We can now see a useful equality by
         using the fact that $ \left(A^c\right)^c = A $:
         \begin{align}
@@ -846,10 +863,10 @@ Perhaps, the most rigid ``same" is an isometry.
     \end{proof}
 \end{theorem}
 \begin{definition}{The topology of a metric space}{topology}
-    The \emph{topology} of a metric space $ (X, d) $ is denoted as $ T_d $, and
+    The \emph{topology} of a metric space $ (X, d) $, denoted as $ T_d $,
     is defined to be \emph{the collection of all open subsets of $ X $}. Note
-    that since $ T_d \subseteq \mathcal{P}(X) $, for any set $ X $, $ \emptyset,
-    X \in T_d $, so $ T_d \neq \emptyset $.
+    that since $ T_d \subseteq \mathcal{P}(X) $ for any set $ X $, so $ T_d \neq \emptyset $ as $ \emptyset,
+    X \in T_d $, .
 \end{definition}
 \begin{theorem}{Equivalence between openness and the existence of open balls}
         {openness-open-balls}
@@ -864,14 +881,16 @@ Perhaps, the most rigid ``same" is an isometry.
     \begin{minipage}{\dimexpr.6\linewidth-2em}
         \begin{proof}
             \iffforward First assume that $ A $ is open. By definition, $ A \cap
-            \partial A = \emptyset $. If $ A = \emptyset $, then there exists no
+            \partial A = \emptyset $.\\
+            If $ A = \emptyset $, then there exists no
             points to select, and the universal quantifier cannot select any
-            points for $ x $. If $ A \neq \emptyset $, then there must be at
+            points for $ x $. \\
+            If $ A \neq \emptyset $, then there must be at
             least one $ \epsilon > 0 $ such that $ B(x, \epsilon) \subseteq A $
             or $ B(x, \epsilon) \subseteq A^c $ for any $ x \in A $. But, since
             $ x \in A $, it is not possible that $ B(x, \epsilon) $ is entirely
             contained within $ A^c $, since $ x \in B(x, \epsilon) $. Hence, $
-            B(x, \epsilon) \subseteq A^c $, as required.
+            B(x, \epsilon) \subseteq A$, as required.
 
             \iffbackward Next, suppose that $ \forall x \in A\, \exists \epsilon
             > 0 $ such that $ B (x, \epsilon) \subseteq A $. Take any $ x \in A
@@ -897,6 +916,16 @@ Perhaps, the most rigid ``same" is an isometry.
         \captionof{figure}{Every point supports an open ball}
     \end{minipage}
 \end{theorem}
+\begin{definition}{Definitions of open}{open-def}
+    For any set $A\subseteq X$, its openness can be defined in multiple ways:
+    \begin{equation}
+        \begin{split}
+        A \text{ is open} &\iff A^c \text{ is closed}\\
+        &\iff \partial A\cup \A = \emptyset\\
+        &\iff \text{For any }x\in A, \exists \epsilon > 0, \text{ such that } B(x, \epsilon) \subseteq A
+    \end{split}
+    \end{equation}
+\end{definition}
 \begin{theorem}{The open ball is open}{open-ball-open}
     For any $ x \in X $ and any $ \epsilon > 0 $, $ B(x, \epsilon) \in T_d $.
     Since $ T_d $ is defined to be a collection of open sets, this statement is
@@ -904,15 +933,17 @@ Perhaps, the most rigid ``same" is an isometry.
     \begin{proof}
         Take an $ x \in X $ and construct the open ball $ B(x, \epsilon) $, for
         a fixed $ \epsilon > 0 $. Take $ y \in B(x, \epsilon) $ and let $ \Delta
-        \coloneq d(x, y) $. If $ x=y $, then $ B(x, \epsilon) = B(y, \epsilon)
-        \subseteq B(x, \epsilon) $, there is nothing to do; therefore, we assume
+        \coloneq d(x, y) $.\\
+        If $ x=y $, then $ B(x, \epsilon) = B(y, \epsilon)
+        \subseteq B(x, \epsilon) $, there is nothing to do.\\ Therefore, we assume
         that $ x \neq y $, thus $ \Delta > 0 $ and $ 0 < \Delta < \epsilon $.
         Let $ \epsilon^\prime \coloneq \min\left\{ \Delta, \epsilon-\Delta
         \right\} $ and consider $ B(y, \epsilon^\prime/2) $.
 
         \begin{minipage}{.45\linewidth}
             To show the openness of the open ball, it is sufficient to show that
-            $ B(y, \epsilon^\prime/2) \subseteq B(x, \epsilon) $. By the
+            $ B(y, \epsilon^\prime/2) \subseteq B(x, \epsilon) $, as it would satisfy \cref{theorem:openness-open-balls}.\\
+            By the
             triangle inequality on $ d $, for any $ z \in B(y,
             \epsilon^\prime/2) $,
             \begin{align}
@@ -959,7 +990,8 @@ Perhaps, the most rigid ``same" is an isometry.
     \begin{proof}
         Suppose that $ A \neq \emptyset $ and is open. Take any $ x \in A $, and
         we know by \cref{theorem:openness-open-balls} that there exists an $
-        \epsilon > 0 $ such that $ B(x, \epsilon) \subseteq A $. Then, we claim
+        \epsilon > 0 $ such that $ B(x, \epsilon) \subseteq A $. \\
+        Then, we claim
         that
         \begin{equation}
             A = \bigcup_{x \in A} B\left(x, \epsilon(x)\right)
@@ -972,7 +1004,8 @@ Perhaps, the most rigid ``same" is an isometry.
         The leftmost conjunctive on the right-hand-side is clearly true: by
         placing an open ball of strictly positive radius around every point in $
         A $, the entire set will be covered, since $ x \in B(x, \epsilon) $ for
-        any $ x $ and $ \epsilon > 0 $. The rightmost conjunctive is also true,
+        any $ x $ and $ \epsilon > 0 $.\\
+        The rightmost conjunctive is also true,
         since each individual ball is wholly contained within $ A $, and taking
         the union of all such interior balls cause any elements to ``escape''
         the set in which they reside. Hence, $ A $ is the union of the open
@@ -986,7 +1019,7 @@ Perhaps, the most rigid ``same" is an isometry.
         \bigcup_{\Omega \in \Lambda} \Omega \in T_d \text { is open.}
     \end{equation}
     \begin{proof}
-        Take $ x \in \bigcup_{\Omega \in \Lambda} \Omega $. Thus, there exists
+        Take a point $ x \in \bigcup_{\Omega \in \Lambda} \Omega $. Thus, there exists
         an open $ \Omega(x) $ such that $ x \in \Omega(x) $. By
         \cref{definition:open-closed-clopen-sets}, there exists an $ \epsilon >
         0 $ such that $ B(x, \epsilon) \subseteq \Omega(x) $. By transitivity,
@@ -1032,7 +1065,7 @@ Perhaps, the most rigid ``same" is an isometry.
     \end{tikzpicture}
     \captionof{figure}{Nested intersections $ I_1 $ through $ I_5 $}
 \end{example}
-\begin{theorem}{Any finite intersection of open sets is closed}
+\begin{theorem}{Any finite intersection of open sets is open}
         {open-intersection-open}
     Take \emph{any finite} collection of open sets $ \Omega_1, \ldots, \Omega_N
     \in T_d $. Then,
@@ -1042,14 +1075,15 @@ Perhaps, the most rigid ``same" is an isometry.
     \begin{proof}
         If $ \bigcap_{i=1}^N \Omega_i = \emptyset $, then there is nothing
         further to show, since $ \emptyset $ is known to be open and thus a
-        member of all topologies $ T_d $. We now assume that the intersection is
+        member of all topologies $ T_d $.\\
+        We now assume that the intersection is
         non-empty, from which we take an element $ x $. Thus, there exists an $
-        \epsilon_i > 0 $ for which $ B(x, \epsilon_i) \subseteq \Omega_i $. Let
+        \epsilon_i > 0 $ for each $\Omega_i$ for which $ B(x, \epsilon_i) \subseteq \Omega_i $. Let
         $ \epsilon \coloneq \min\left\{ \epsilon_1, \ldots, \epsilon_N \right\}
         $; then, $ B(x, \epsilon) \subseteq B(x, \epsilon_i) \subseteq \Omega_i
         $ for any choice of $ i = 1, \ldots, N $. Therefore,
         \begin{equation}
-            B(x, \epsilon) \in \bigcap_{i=1}^N \Omega_i,
+            B(x, \epsilon) \subseteq \bigcap_{i=1}^N \Omega_i,
         \end{equation}
         since $ B(x, \epsilon) $ is a member of \emph{every} $ \Omega_i $. Hence
         we can place an open ball with positive radius around any point and stay
@@ -1083,6 +1117,7 @@ Perhaps, the most rigid ``same" is an isometry.
             (\cref{theorem:open-intersection-open}).
     \end{axioms}
 \end{theorem}
+\pagebreak
 
 \lecture{Lecture VI}{Viewer.aspx?id=ed63db50-27cd-4d84-8e60-b093009be8af}{
     Lecture Six continues to cover the topology induced by a metric by deriving
@@ -1299,7 +1334,7 @@ Perhaps, the most rigid ``same" is an isometry.
         complement of the closure of $ A $, within which $ B(y, \delta) $ is
         nested.}
 \end{theorem}
-
+\begin{comment}
 \lecture{Lecture VII}{}{
     Lecture Seven demonstrates that a space is closed if and only if it is equal
     to its own closure, and moves to introduce the topic of
