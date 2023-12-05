@@ -1165,25 +1165,23 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
     \end{equation}
     for all $ x, y \in X $.
 \end{theorem}
-\begin{example}{\texorpdfstring{$ \mathbb{R}^2 $}{The plane} is topologically
-        equivalent under the \texorpdfstring{$ d_1 $, $ d_2 $, and $ d_\infty
-        $}{standard} metrics}{plane-top-eq}
-    Recall the unit circles $ S_1^2 $ (\cref{fig:d1-unit-circle}), $ S_2^2 $
-    (\cref{fig:d2-unit-circle}), and $ S_\infty^2 $
+\begin{example}{\texorpdfstring{$ \mathbb{R}^2 $}{The plane} is topologically equivalent under the \texorpdfstring{$ d_1 $, $ d_2 $, and $ d_\infty $}{standard} metrics}{plane-top-eq}
+    Recall the unit circles $ S^1_1 $ (\cref{fig:d1-unit-circle}), $ S_2^1 $
+    (\cref{fig:d2-unit-circle}), and $ S_\infty^1 $
     (\cref{fig:dinf-unit-circle}) from \cref{example:unit-circles}. We claim
     (and give an information demonstration to show) that $ T_{d_1} = T_{d_2} =
     T_{d_\infty} $; that is, $ d_1 $, $ d_2 $, and $ d_\infty $ are
     topologically equivalent by \cref{definition:topological-equivalence}.
 
-    We first consider the set $ S_1^2 \eqcolon \Omega $ in the space $
+    We first consider the set $ S_1^1 \eqcolon \Omega $ in the space $
     \left(\mathbb{R}^2, d_2\right) $. Take a point $ x_0 \in \Omega $ and
-    construct the open ball $ B(x_0, \epsilon/2) \subseteq S_1^2 $; such a ball
+    construct the open ball $ B(x_0, \epsilon/2) \subseteq S_1^1 $; such a ball
     can be created by considering an $ \epsilon \coloneq \min\left\{ \epsilon_1,
     \epsilon_2, \epsilon_3, \epsilon_4 \right\} $, where $ \epsilon_i $ for $ i
     = 1, 2, 3, 4 $ are the perpendicular distances from $ x_0 $ to the boundary
     of $ \Omega $ by the $ d_2 $ metric. Then, $ \Omega \in T_{d_2} $.
 
-    Next, consider $ S_2^2 \eqcolon \Lambda $ in the space $ \left(\mathbb{R}^2,
+    Next, consider $ S_2^1 \eqcolon \Lambda $ in the space $ \left(\mathbb{R}^2,
     d_1\right) $. Constructing open balls in $ d_1 $ around the points in $
     \Lambda $ is easier still, since we only need to consider `diamonds' which
     lie entirely within the Euclidean $ d_2 $ unit circle. By covering the
@@ -1274,31 +1272,21 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
     For an open set $ A \subseteq X $, the closure $ \overline{A} $ is closed.
     \begin{proof}
         By \cref{theorem:open-subset-closed-complement}, $ \overline{A} $ is
-        closed if and only if $ \left(\overline{A}\right)^c $ is open. If $
-        \left(\overline{A}\right)^c = \emptyset $, then we are done since the
+        closed if and only if $ \left(\overline{A}\right)^c $ is open.\\
+        If $\left(\overline{A}\right)^c = \emptyset $, then we are done since the
         empty set is known to be open; thus we assume that $
-        \left(\overline{A}\right)^c \neq \emptyset $. To prove the openness of
+        \left(\overline{A}\right)^c \neq \emptyset $.
+        
+        To prove the openness of
         this non-empty set, we consider an arbitrary point $ x \in
         \left(\overline{A}\right)^c $ and construct an $ \epsilon > 0 $ such
-        that $ B(x, \epsilon) \subseteq \left(\overline{A}\right)^c $.
-
-        Since $ \overline{A} = A \cup \partial A $, $ x \not\in A $ and $ x
-        \not\in \partial A $. We can use rules from first-order logic combined
-        with De Morgan's laws to negate the definition of a boundary point shown
-        in \cref{definition:boundary-points}:
-        \begin{align}
-            x \in \left(\partial A\right)^c &= \left\{ y \in X \colon \forall
-                \epsilon > 0 \, B(y, \epsilon) \cap A \neq \emptyset \land B(y,
-                \epsilon) \cap A^c \neq \emptyset \right\}^c \\
-            &= \left\{ y \in X \colon \forall \epsilon > 0 \, B(y, \epsilon)
-                \cap A = \emptyset \lor B(y, \epsilon) \cap A^c = \emptyset
-                \right\} \\
-            &= \left\{ y \in X \colon \forall \epsilon > 0 \, B(y, \epsilon)
-                \subseteq A^c \lor B(y, \epsilon) \subseteq A \right\}
-        \end{align}
-        Since $ x \not\in A $, $ B(x, \epsilon) \subseteq A^c $ is the only
-        possibility. We also require that $ x \not\in \partial A $, so we need
-        to show that there is an $ \epsilon > 0 $ such that $ B(x, \epsilon)
+        that $ B(x, \epsilon) \subseteq \left(\overline{A}\right)^c $.\\
+        Take $x \in (\overline{A})^c$, then since $ \overline{A} = A \cup \partial A $, $ x \not\in A $ and $ x
+        \not\in \partial A $. \\
+        As $ x
+        \not\in \partial A $, then $\exists \epsilon>0 $ such that  $\forall x$, $B(x, \epsilon) \subseteq A^c$ or $  B(x, \epsilon) \subseteq A$, but since $ x \not\in A $, $ B(x, \epsilon) \subseteq A^c $ is the only
+        possibility.\\
+        We also require that there is an $ \epsilon > 0 $ such that $ B(x, \epsilon)
         \cap \partial A = \emptyset $. By way of contradiction, suppose that
         there exists a $ y \in B(x, \epsilon) $ such that $ y \in \partial A $.
         By definition \cref{definition:boundary-points}, for all $ \delta > 0 $,
@@ -1310,7 +1298,12 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         \coloneq \min\left\{ \epsilon^*, \epsilon - \epsilon^* \right\} $, then
         $ B(y, \hat{\epsilon}/2) \subseteq B(x, \epsilon) $. But $ B(y,
         \hat{\epsilon}) \cap A \neq \emptyset $. This is a contradiction: no
-        such $ y $ can exist, so $ \left(\overline{A}\right)^c $ is open, and $
+        such $ y $ can exist as $B(x, \epsilon)\subseteq A^c$.\\
+        This shows that $ B(x, \epsilon)
+        \cap \partial A = \emptyset $ and so, $\forall x \in (\overline{A})^c$ there is an $\epsilon>0$ such that $ B(x, \epsilon) \subseteq (\overline{A})^c
+        $
+        
+        Therefore, by \cref{theorem:openness-open-balls} $, \left(\overline{A}\right)^c $ is open, and so $
         \overline{A} $ is closed.
     \end{proof}
     \centering
