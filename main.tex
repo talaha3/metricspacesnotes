@@ -815,7 +815,7 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
     since $ \partial A = \emptyset $; thus $ A $ is also open, and is ultimately
     clopen when interpreted as a subspace.
 \end{example}
-\end{comment}
+
 
 \lecture{Lecture V}{Viewer.aspx?id=dbcb156d-d828-454f-929d-b091009bf65b}{
     Lecture Five proves multiple important theorems: a set is open if and only
@@ -1327,16 +1327,21 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         complement of the closure of $ A $, within which $ B(y, \delta) $ is
         nested.}
 \end{theorem}
-\begin{comment}
+\end{comment}
 \lecture{Lecture VII}{}{
     Lecture Seven demonstrates that a space is closed if and only if it is equal
     to its own closure, and moves to introduce the topic of
     limit/accumulation/cluster points whilst proving some useful related
     properties.
-}{}
-
-\begin{theorem}{Relationships between a closed set and its
-        closure}{closed-set-closure}
+}{\DTMdisplaydate{2023}{10}{17}{Tuesday}}
+\begin{theorem}{The closure of the open ball is the closed ball in \texorpdfstring{$\mathbb{R}^n$}{n-dimensional Euclidean space}}{close-open-ball}
+In the metric space $(\mathbb{R}^n,d_2)$, the closure of the open ball centred at $x$ of radius $r$ is the closed ball, that is
+\begin{equation}
+    \overline{B(x,r)} =\overline{B}(x,r)
+\end{equation}
+NOTE: this is not true for all metric spaces.
+\end{theorem}
+\begin{theorem}{Relationships between a closed set and its closure}{closed-set-closure}
     If $ A \subseteq X $ is closed, then $ A = \overline{A} $; if $ A =
     \overline{A} $, then $ A $ is closed. That is, $ A $ is closed if and only
     if $ A = \overline{A} $.
@@ -1344,10 +1349,9 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         \iffforward If $ A = \overline{A} $, then $ \overline{A} $ is closed by
         \cref{theorem:closure-closed}. Thus $ A $ is closed.
 
-        \iffbackward If $ A $ is closed, then $ \overline{A} = A \cup \partial A
-        $ by \cref{definition:closure}. By
-        \cref{definition:open-closed-clopen-sets}, $ \overline{A} = \partial A
-        \cup \overline{A} = A $.
+        \iffbackward If $ A $ is closed, then $ \partial A \subseteq A$ by
+        \cref{definition:open-closed-clopen-sets}. Then, $ A = \partial A
+        \cup A = \overline{A} $.
     \end{proof}
 \end{theorem}
 \begin{definition}{Limit/Accumulation/Cluster Points}{limit-points}
@@ -1359,11 +1363,7 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
             \text{ for all } \epsilon > 0.
         \end{equation}
         The \emph{derived set} of $ A $ is denoted $ A^\prime $, and is defined
-        to be the set of all limit points of $ A $. Equivalently (in the context
-        of metric spaces, but not the more general topological spaces), we can
-        say that $ y \in X $ is a limit point of $ A $ if, for any $ \epsilon >
-        0 $, the intersection $ B(y, \epsilon) \cap A $ contains infinitely many
-        points of $ A $. Limit points are sometimes called \emph{accumulation
+        to be the set of all limit points of $ A $. Limit points are sometimes called \emph{accumulation
         points} or \emph{cluster points}.
     \end{minipage}\hfill
     \begin{minipage}{.35\linewidth}
@@ -1382,15 +1382,26 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
             can still find non-centroid points of $ A $.}
     \end{minipage}
 \end{definition}
-\begin{theorem}{The closure of a set is the union of the base set and its
-        derived set}{closure-limit-union}
+\begin{theorem}{A closed set contains its limit points}{closed-contains-limits}
+For a closed set $F \subseteq X$, $F$ contains its limit points
+\begin{proof}
+    Suppose $F$ is closed and $\exists y$ such that $y \in F^\prime$ but $y \notin F$.\\
+    Take $\epsilon>0$ and consider $B(y,\epsilon)$:
+    \begin{itemize}
+        \item[(i)] By definition of a limit point, $\exists y^\prime \neq y \in F$ such that $y^\prime \in B(y, \epsilon) \implies B(y, \epsilon) \cap F \neq \emptyset$  
+        \item[(ii)]  $y \in B(y,\epsilon)$ and $y \notin F$, so $y \in F^c \implies B(y, \epsilon) \cap F^c \neq \emptyset$
+    \end{itemize}
+So (i) and (ii) $\implies y$ is a boundary point of $F$, and so $y \in F$ since F is closed. However, this is a contradiction and thus our assumption is incorrect and $ y \in F$.
+\end{proof}
+\end{theorem}
+\begin{theorem}{The closure of a set is the union of the base set and its derived set}{closure-limit-union}
     For a set $ A \subseteq X $, $ \overline{A} = A \cup A^\prime $.
     \begin{proof}
         If $ A $ is closed, then the result is immediate: $ \overline{A} = A $
         (by \cref{theorem:closed-set-closure}), so $ A^\prime \subseteq A =
         \overline{A} $. Thus, we assume that $ A $ is open. If $ A^\prime =
         \emptyset $, then $ A^\prime \subseteq \overline{A} $, since $ A $ has
-        no limit points; therefore, we also assume that $ A $ is non-empty. We
+        no limit points; therefore, we also assume that $ A^\prime $ is non-empty. We
         will show the equality $ \overline{A} = A \cup A^\prime $ for an open
         non-empty set $ A $ through the principle of double-inclusion.
 
@@ -1406,8 +1417,15 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         A^\prime $ such that $ y \not\in A $. Take $ \epsilon > 0 $ and note
         that $ B(y, \epsilon) \cap A \neq \emptyset $ and $ B(y, \epsilon) \cap
         A^c \neq \emptyset $. Thus, by \cref{definition:boundary-points}, $ y $
-        is a boundary point. We now unravel the definitions:
-        \begin{alignat}{2}
+        is a boundary point, and thus $\overline{A} \subseteq A \cup A^\prime$. 
+        
+        Hence, $ \overline{A} = A \cup \partial A = A \cup A^\prime $ for any
+        $ A \subseteq X $.
+    \end{proof}
+\end{theorem}
+\begin{definition}{Definitions of closed}{closed-def}
+For any set $A \subseteq X$, its \emph{closeness} can be defined in many ways:
+    \begin{align}
             A \text{ is closed} &\iff \partial A \subseteq A
                 &&\mathrm{[\Cref{definition:open-closed-clopen-sets}]} \\
             &\iff A^c \text{ is open}
@@ -1423,25 +1441,43 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
                 &&\mathrm{[\Cref{eqn:closure-limit-union-open}]} \\
             &\iff A = \overline{A} \\
             &\iff A \supseteq A^\prime
-        \end{alignat}
-        Hence, $ \overline{A} = A \cup \partial A = A \cup A^\prime $ for any
-        $ A \subseteq X $.
-    \end{proof}
-\end{theorem}
+        \end{align}
+\end{definition}
 \begin{definition}{Topological Interpretation of Closure}{topological-closure}
     Let $ (X, d) $ be a metric space, and $ A \subseteq X $. Then,
     \begin{equation}
         \overline{A} = \bigcap_{F \in \mathcal{F}} F,
     \end{equation}
-    where $ \mathcal{F} $ is the collection of all open supersets of $ A $. This
+    where $ \mathcal{F} $ is the collection of all closed supersets of $ A $. This
     means that $ \overline{A} $ is the smallest closed superset of $ A $.
 \end{definition}
+\begin{theorem}{The closure is the smallest closed superset}{closure-smallest-superset}
+For any set $A \subseteq X$, if $A \subseteq F \subseteq \overline{A}$ and $F$ is closed, then $F = \overline{A}$.
+\begin{proof}
+    Suppose that $y \in A^\prime$ but $y\notin F$.\\
+    By definition, for any $\epsilon>0$, $B(y,\epsilon)\cap A \neq \emptyset$ and contains an $x\neq y \in A$.\\
+    But $x \in A \subseteq F \implies y \in F^\prime$ but $F$ is closed so $F^\prime \subseteq F \implies y \in F$, which is a contradiction.
+
+    Thus, $F=A \cup A^\prime = \overline{A}$
+\end{proof}
+\end{theorem}
 \begin{definition}{Density}{density}
     Let $ (X, d) $ be a metric space and $ A \subseteq X $. Then $ A $ is said
     to be \emph{dense} in $ X $ if and only if $ \overline{A} = X $.
     Alternatively---but equivalently---for any $ x \in X $ and any $ \epsilon >
     0 $, there exists an $ a \in A $ such that $ d(x, a) < \epsilon $.
 \end{definition}
-\end{comment}
+\begin{example}{\texorpdfstring{$\mathbb{Q} \text{ is dense in } \mathbb{R}$}{Rationals are dense in reals}}{rational-reals}
+    We can say $\mathbb{Q}$ is dense in $\mathbb{R}$ since for any $x \in \mathbb{R}$ and and $\epsilon>0$, there exists $p/q \in \mathbb{Q}$ such that $\vert x - p/q \vert < \epsilon$.
+
+    Thus $\overline{\mathbb{Q}}=\mathbb{R}$
+\end{example}
+
+\lecture{Lecture VIII}{Viewer.aspx?id=90ed9c29-e6e1-4fa4-a3a8-b0a000d532b9}{
+    Lecture Eight introduces the concept of sequences in metric spaces and provides an understanding of convergence in terms of topology. It also introduces another idea of equivalence through the use of convergent sequences.
+}{\DTMdisplaydate{2023}{10}{19}{Thursday}}
+\begin{definition}{Sequence}
+    
+\end{definition}
 \end{document}
 
