@@ -1474,10 +1474,91 @@ For any set $A \subseteq X$, if $A \subseteq F \subseteq \overline{A}$ and $F$ i
 \end{example}
 
 \lecture{Lecture VIII}{Viewer.aspx?id=90ed9c29-e6e1-4fa4-a3a8-b0a000d532b9}{
-    Lecture Eight introduces the concept of sequences in metric spaces and provides an understanding of convergence in terms of topology. It also introduces another idea of equivalence through the use of convergent sequences.
+    Lecture Eight introduces the concept of sequences in metric spaces and provides an understanding of convergence in terms of topology. It also proves that equivalent sequences have the same convergent sequences.
 }{\DTMdisplaydate{2023}{10}{19}{Thursday}}
-\begin{definition}{Sequence}
-    
+\begin{definition}{Sequences in a metric space}{seq-defn}
+    A sequence in a metric space $(X,d)$ is an element $x \in X^\mathbb{N}$, where
+    \begin{equation}
+        x = (x_1, x_2, x_3, \dots, x_n, \dots);  x_i \in X
+    \end{equation}
+This sequence is denoted as $(x_n)_{n\in \mathbb{N}}$ or $(x_n)_{n=1}^{\infty}$.
 \end{definition}
+\begin{definition}{Convergence of a sequence in a metric space}{conv-defn}
+    Let $(x_n)_{n=1}^{\infty}$ be sequence in a metric space $(X,d)$.
+    
+    Then $(x_n)$ converges to $x \in X$ if and only if for any $\epsilon>0$, there exists $N = N(\epsilon)>0$ such that $d(x_n, x)<\epsilon$ for all $n>N$.\\
+    Equivalently, $(x_n)$ converges to $x \in X$ if and only if for any $\epsilon>0$, there exists $N = N(\epsilon)>0$ such that $x \in B(x, \epsilon)$ for all $n>N$.
+
+    If this is the case, we write $x_n \to x$ as $n \to \infty$ and $x$ is called the limit. 
+    \begin{equation}
+        x_n \to x \text{ as } n \to \infty \iff d(x_n,x)\to 0 \text{ as } n \to \infty 
+    \end{equation}
+    If no such $x$ exists, then we say $(x_n)_{n=1}^{\infty}$ is \emph{divergent}.
+\end{definition}
+\begin{theorem}{Convergence in \texorpdfstring{$\mathbb{R}^k$}{k-dimensional Euclidean space} is equivalent to convergence of each sequence in \texorpdfstring{$\mathbb{R}$}{reals}}{conv-equiv}
+Let $\vec{x}_n \in \mathbb{R}^k$, where $\vec{x}_n = (x_1^{(n)}, x_2^{(n)},\dots,x_k^{(n)})$. Then, 
+\begin{equation}
+    \begin{split}
+        \vec{x}_n \to \vec{x} \iff x_i^{(n)} \to x_i \text{ as } n \to \infty \\
+        \text{where }\vec{x} = (x_1, x_2,\dots,x_k)
+    \end{split}
+\end{equation}
+\begin{proof}
+    We will prove this for $(X,d_\infty)$.
+\iffforward Suppose $\vec{x}_n \to \vec{x}$ as $n \to \infty$. \\
+Let $\epsilon>0$ be given. Then, by \cref{definition:conv-equiv}, there exists $N>0$ such that $d_\infty(\vec{x}_n, \vec{x})<\epsilon$ for all $n>N$. That is, $\max\limits_{1\leq i \leq k}\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$, and so, $\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$ and $1\leq i \leq k$.\\
+But this means the real sequence $\left(x_i^{(n)}\right)^\infty_{n=1}$ converges to $x_i$.
+
+\iffbackward Suppose for each $i \in \{1,2,\dots, k\}$, the sequence $\left(x_i^{(n)}\right)^\infty_{n=1}$ converges to $x_i$ as $n \to \infty$.\\
+Let $\epsilon>0$. Then for any $i \in \{1,2,\dots, k\}$, there exists $N_i>0$ such that $\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N_i$.\\
+Let $N\coloneqq\max\{N_1, N_2, \dots, N_k\}$. Then, $\vert x_i^{(n)}-x_i \vert < \epsilon$ for $n>N$ and each $i \in \{1,2,\dots, k\}$. This means that for $n>N$, $\vec{x}_n \to \vec{x}$.
+
+Therefore, convergence in $\mathbb{R}^k$ is equivalent to convergence in $\mathbb{R}$ of each sequence.
+\end{proof}
+\end{theorem}
+\begin{example}{Different metrics on same set can have different convergent sequences}{diff-metric-same-set}
+    Consider the sequence $\left(f_n\right)_{n=1}^\infty \in C\left([0,1]\right)$ where 
+    \begin{equation}
+        \begin{split}
+            f_n \colon [0,&1] \to \mathbb{R}\\
+            f_n(t) &= t^n
+        \end{split}
+    \end{equation}
+We will compare convergence in the $d_2$ metric and the $d_\infty$ metric:
+\begin{itemize}
+    \item[(i)] $d_2(f_n,0)$ as $n \to \infty$:
+        \begin{align}
+        d_2(f_n, 0) &= \left( \int^1_0\left(f_n(t)-0\right)^2\, dt\right)^{1/2}\\
+        &=\left( \int^1_0\left(t^n\right)^2\, dt\right)^{1/2}\\
+        &=\left( \int^1_0 t^{2n}\, dt\right)^{1/2}\\
+        &=\left[\sqrt{\frac{1}{2n+1}t^{2n+1}}\right]^1_0\\
+        &= \sqrt{\frac{1}{2n+1}} \to 0 \text{ as } n \to \infty
+    \end{align} 
+    \item[(ii)] $d_\infty(f_n,0)$ as $n \to \infty$:
+        \begin{align}
+            d_\infty(f_n,0) &= \sup\{\vert f_n(t) -0\vert\colon t \in [0,1]\} \\
+            &= \sup\{\vert f_n(t) \vert\colon t \in [0,1]\} \\
+            &= \sup\{\vert t^n \vert\colon t \in [0,1]\} \\ 
+            &= 1 \,\,\, \forall n \in \mathbb{N} \not\to 0 \text{ as } n \to \infty
+        \end{align}
+\end{itemize}
+Thus, different metrics on the same set may lead to a different convergence.
+\end{example}
+\begin{theorem}{Equivalent metrics have the same convergent sequences}{equiv-metric-same-conv}
+    Suppose that $(X,d)$ and $\e(Y,\Tilde{d})$ are \emph{equivalent}(\cref{definition: topological-equivalence}), i.e. there exists $\epsilon>0$ such that 
+    \begin{equation}
+        \frac{1}{\lambda}\Tilde{d}(x,y)\leq d(x,y) \leq \lambda\Tilde{d}(x,y)
+    \end{equation} 
+    Then, $\left(x_n\right)^\infty_{n=1} \to x$ in $(X,d) \iff \left(y_n\right)^\infty_{n=1} \to y$ in $(Y,\Tilde{d})$
+    \begin{proof}
+        \iffforward Suppose $x_n \to x$ as $n\to \infty$ in $(X,d)$.\\
+        Let $\epsilon>0$ be given. Set $\hat{\epsilon}= \epsilon/\lambda$.\\
+        Then, there exists $N>0$ such that $d(x,x_n)<\hat{\epsilon} = \epsilon/\lambda$ for all $n>N$.\\
+        But $\frac{1}{\lambda}\Tilde{d}(x,y)\leq d(x,y)< \epsilon/\lambda$.\\
+        Therefore, $\Tilde{d}(y_n, y) \leq \lambda d(x_n, x) \leq \epsilon$ and so $\left(y_n\right)^\infty_{n=1} \to y$ in $(Y,\Tilde{d})$.
+        
+        \iffbackward Can be proved analogously for $\Tilde{d}$.
+    \end{proof}
+\end{theorem}
 \end{document}
 
