@@ -1327,7 +1327,7 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         complement of the closure of $ A $, within which $ B(y, \delta) $ is
         nested.}
 \end{theorem}
-\end{comment}
+
 \lecture{Lecture VII}{}{
     Lecture Seven demonstrates that a space is closed if and only if it is equal
     to its own closure, and moves to introduce the topic of
@@ -1560,5 +1560,91 @@ Thus, different metrics on the same set may lead to a different convergence.
         \iffbackward Can be proved analogously for $\Tilde{d}$.
     \end{proof}
 \end{theorem}
+\end{comment}
+
+\lecture{Lecture IX}{Viewer.aspx?id=0fa218ae-7c44-465c-b963-b09f009bd3ea}{
+    Lecture Nine introduces the uniqueness of a limit for a given sequence, the definition for point-wise convergence along with Cauchy and complete sequences. It also provides a topological definition for continuous functions.
+}{\DTMdisplaydate{2023}{10}{24}{Tuesday}}
+\begin{theorem}{The limit of a convergent sequence is unique}{limit-unique}
+    Let $(X,d)$ be a metric and a sequence $x_n$ in $X$. If $x_n \to x$ and $x_n \to y$ then $x=y$. We write
+    \begin{equation}
+        \lim_{n\to \infty} x_n = x
+    \end{equation}
+    \begin{proof}
+        Assume $x\neq y$, then $d(x,y) = \epsilon >0$.\\
+        Set $\delta=\epsilon/2$.\\
+        As $x_n \to x$  as $n \to \infty$ then, by \cref{definition: conv-equiv}, there exists $N = N(\delta) > 0$ such that $d(x_n, x) < \delta = \epsilon/2$ for all $n>N$. Also, there exists $\hat{N} = N(\delta) > 0$ such that $d(x_n, y) < \delta = \epsilon/2$ for all $n>\hat{N}$.\\
+        Set $M = \max\{N, \hat{N}\}$, then both the above conditions should be held for all $n>M$.
+
+        Using the triangle inequality, for all $n>M$, 
+        \begin{align}
+            d(x,y) &\leq d(x, x_n) + d(x_n, y)\\
+            &< \delta + \delta\\
+            &= \epsilon
+        \end{align}
+        But $d(x,y)=\epsilon$ and so it is a contradiction.
+
+        Therefore, the assumption was incorrect and $x=y$.
+    \end{proof}
+\end{theorem}
+\begin{definition}{Series in \texorpdfstring{$(\mathbb{R},d)$}{the real space}}{series-defn}
+    The series of a sequence $ x_n \in \mathbb{R} $ is defined to be the limit (if it exists) of the \emph{partial sum sequence} $S_k$ as $k \to \infty$, where 
+    \begin{equation}
+        S_k = \sum_{n=1}^k x_n
+    \end{equation}
+    The series is denoted as $S_\infty$, where 
+    \begin{equation}
+        S_\infty \coloneqq \lim_{k\to\infty} S_k
+    \end{equation}
+
+    This can be moved to an abstract setting if $(X,d)$ has a notion of addition.
+\end{definition}
+\begin{definition}{Point-wise convergence of a sequence of functions}{pointwise-conv}
+    Let $\left(f_n\right)^\infty_{n=1}$ be a metric sequence of function, where 
+    \begin{equation}
+        f_n \colon X \to Y
+    \end{equation}
+    The function $f$ is the point-wise limit of $\left(f_n\right)^\infty_{n=1} \iff$ for any $x_0 \in X$, $\lim\limits_{n \to\infty} f_n(x_0) = f(x_0)$.
+
+    Thus, $f_n$ converges to $f$ point-wise:
+    \begin{equation}
+        f_n \xrightarrow{\text{p.t.}} f \, \text{as } n\to \infty
+    \end{equation}
+    
+\end{definition}
+\begin{definition}{Continuity of functions in a metric space}{continuity-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+    \begin{itemize}
+        \item[\textbf{\emph{Local}}] $f$ is continuous at $x_0 \in X \iff f(x_n) \to f(x_0)$ whenever the sequence $(x_n)^\infty_{n=1} \to x_0$. 
+        \item[\textbf{\emph{Global}}] $f$ is continuous $\iff f$ is continuous at every $x_0 \in X$ 
+    \end{itemize}
+    We can generalise $C([0,1])$ to $C(X,Y) = \{f:X\to Y \, \vert \,f \text{ is continuous}\}$
+\end{definition}
+\begin{definition}{Cauchy sequence}{cauchy-defn}
+    Let $\left(x_N\right)^\infty_{n=1}$ be a sequence.
+    
+    Then $x_n$ is \emph{cauchy} if and only if, for any $\epsilon>0$, there exists $N>0$ such that $d(x_n, x_m)<\epsilon$ for all $n, m>N$.
+\end{definition}
+\begin{theorem}{Convergence implies Cauchy}{conv-implies-cauchy}
+    Let $(X,d)$ be a metric space and $\left(x_n\right)^\infty_{n=1}$ be a convergent sequence to $x \in X$. Then $\left(x_n\right)^\infty_{n=1}$ is Cauchy.
+    \begin{proof}
+        Let $\epsilon>0$ be given.\\
+        Set $\delta = \epsilon/2 >0 $.\\
+        Then, by \cref{definition:conv-defn}, there exists $N = N(\delta) > 0$ such that $d(x_n,x)<\delta$ for all $n>N$. But for all $n,m > N$, using the triangle inequality, it holds that
+        \begin{align}
+            d(x_n,x_m) &\leq d(x_n, x) + d(x, x_m)\\
+            &< \delta+\delta\\
+            &= \epsilon
+        \end{align}
+        Thus, by \cref{definition:cauchy-defn}, $\left(x_n\right)^\infty_{n=1}$ is Cauchy.
+
+        Therefore, convergence implies Cauchy.
+    \end{proof}
+\end{theorem}
+\begin{example}{Cauchy does not imply convergence}{cauchy-notimply-conv}
+    Let $(X,d)$ be a metric space where $X = (0, \infty)$, and let $x_n = \frac{1}{n}$.
+
+    $x_n \to 0$ as $n \to \infty$, however, $0\notin X$ so the sequence is not convergent in $X$.
+\end{example}
 \end{document}
 
