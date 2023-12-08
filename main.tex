@@ -1649,5 +1649,129 @@ Thus, different metrics on the same set may lead to a different convergence.
 
     $x_n \to 0$ as $n \to \infty$, however, $0\notin X$ so the sequence is not convergent in $X$.
 \end{example}
+\pagebreak
+
+\lecture{Lecture X}{Viewer.aspx?id=1358f782-4f58-49d2-b236-b0a700ef3a9f}{
+    Lecture Ten begins with the idea of a sequence tending to infinity, along with a few more properties of Cauchy with examples, as well as introduces the notion of a sub-sequence. It then goes onto define completeness in a sequence along with its properties and application to the Euclidean space.
+}{\DTMdisplaydate{2023}{10}{26}{Thursday}}
+\begin{theorem}{Limit of a sequence to infinity}{inf-limit}
+    A sequence $x_n$ tends to $\infty \iff$ for any $M>0$, there exists $N>0$ such that $M<x_n$ for all $n>N$
+\end{theorem}
+\begin{theorem}{Not Cauchy implies not convergent}{contrapositive-cauchy}
+    For any sequence $\left(x_n\right)^\infty_{n=1}$, if $(x_n)$ is not Cauchy, it is not convergent.
+    \begin{proof}
+        Taking the contrapositive of \cref{theorem:conv-implies-cauchy}, we get that \emph{not Cauchy} $\implies$ \emph{not convergent}.
+    \end{proof}
+\end{theorem}
+\begin{example}{The harmonic series is divergent}{harmonic-divergent}
+    Given the metric space $(\mathbb{R},d)$, the \emph{harmonic series} $S_\infty$ is defined as 
+    \begin{equation}
+        S_\infty = \sum_{n=1}^\infty \frac{1}{n}
+    \end{equation}
+    By \cref{definition:series-defn}, $S_\infty \coloneqq \lim\limits_{N\to \infty}S_N$. We can show $\left(S_N\right)^\infty_{N=1}$ is not convergent by showing $\left(S_N\right)^\infty_{N=1}$  is not Cauchy.
+
+    Consider
+    \begin{align}
+        \begin{split}
+            S_{2N}-S_N ={}&\left(\dfrac{1}{2N}+\dfrac{1}{2N-1}+\dfrac{1}{2N-2}+\dots+\dfrac{1}{N+1}+\dfrac{1}{N}+\dfrac{1}{N-1}+\dots+1\right)-\\
+            &\left(\dfrac{1}{N}+\dfrac{1}{N-1}+\dots+1\right)
+        \end{split}\\
+            ={}& \left(\dfrac{1}{2N}+\dfrac{1}{2N-1}+\dfrac{1}{2N-2}+\dots+\dfrac{1}{N+1}\right)\\
+            \geq{}& \dfrac{1}{2N}\cdot N\\
+            ={}& \dfrac{1}{2}
+    \end{align}
+    By the definition of Cauchy, given $\epsilon>0$, we would need to find $K>0$ such that $\vert S_M - S_N \vert <\epsilon$ for all $M, N >K$. However, if $M\geq2N$ then $\vert S_M - S_N \vert \geq 1/2$, so the sequence is not Cauchy.
+
+    Therefore, by \cref{theorem:contrapositive-cauchy}, $\left(S_N\right)^\infty_{N=1}$ is not convergent i.e. divergent.
+\end{example}
+\begin{definition}{Sub-sequences}{subsequences-defn}
+    Given $(X,d)$ and a sequence $(x_n)_{n=1}^\infty$ in $X$.
+
+    A sub-sequence of $(x_n)$ is a sequence of elements $x_n, x_{n_2}, x_{n_3},\dots, x_{n_k},\dots$ where $n_i \in \mathbb{N}$ and $n_1<n_2<n_3<\dots<n_k<\dots$ ($n_k \to \infty$ as $k\to \infty$)
+\end{definition}
+\begin{definition}{Divergence in sub-sequences}{subsequences-div}
+    Let $\left(x_n\right)^\infty_{n=1}$ be a sequence in $X$.
+
+    If there exists $n_1<n_2<\dots<n_k<\dots$ and $n_1^\prime<n_2^\prime<\dots<n_k^\prime<\dots$ such that $x_{n_i}\to\infty$ as $i \to \infty$ and $x_{n^\prime_i}\to\infty$ as $i \to \infty$ and $x\neq y$, then $\left(x_n\right)^\infty_{n=1}$ is divergent.
+\end{definition}
+\begin{theorem}{Convergence in sub-sequences}{subsequences-conv}
+    Let $(X,d)$ be a metric space, $\left(x_n\right)^\infty_{n=1}$ be a Cauchy sequence and $\left(x_{n_k}\right)^\infty_{n=1}$ a convergent sub-sequence.
+    
+    Then, $\left(x_n\right)^\infty_{n=1}$ is convergent and $\lim\limits_{n\to\infty}x_n = \lim\limits_{k\to\infty}x_{n_k}=x$
+    \begin{proof}
+        By \cref{conv-defn}It is sufficient to show that for any $\epsilon>0$, there exists $N>0$ such that $d(x_n,x)<\epsilon$ for all $n>N$. 
+
+        Let $\epsilon>0 be given$. \\
+        By definition of Cauchy, we can find $N_1>0$ such that $d(x_n,x_m)<\epsilon/2$ for an $n, m>N_1$.\\
+        By definition of convergence, we can find $N_2>0$ such that $d(x_{n_k},x)<\epsilon/2$ for an $k>N_2$.\\
+        Choose $N=\max{N_1, N_2}$. Thus both conditions hold for all $n,m,k>N$. It follows that 
+        \begin{align}
+            d(x_n,x) &\leq d(x_n, x_{n_k}) + d(x_{n_k},x_x)\\
+            &< \epsilon/2 +\epsilon/2\\
+            &= \epsilon
+        \end{align}
+    Thus, there exists $N>0$ such that $d(x_n, x) <\epsilon$ for all $n>N$. 
+    \end{proof}
+\end{theorem}
+\begin{definition}{Complete metric space}{comp-defn}
+    Let $(X,d)$ be a complete metric space.
+
+    Then $X$ is complete $\iff$ any Cauchy sequence in $X$ converges to a point in $X$
+
+    Equivalently, if $X$ is known to be complete and the sequence $(x_n)$ is known to be Cauchy, then there exists $x\in X$ such that $x_n\to x$ as $n \to\infty$.
+
+    The real space $\mathbb{R}$ is known to be complete.
+\end{definition}
+\begin{theorem}{Completion of a metric space}{completion}
+    Let $(X,d)$ be a metric space.
+
+    Then there is a metric space $(X^*, \hat{d})$ and an isometry $\psi : X \to X^*$ such that:
+    \begin{itemize}
+        \item[i)]$X^*$ is complete
+        \item[ii)]$\overline{\psi(x)} = X^*$ 
+    \end{itemize}
+    $X^*$ is called the \emph{completion} of $X$ and further, all completions of $X$ are isometric to $X^*$.
+\end{theorem}
+\begin{theorem}{Completing a metric space}{complete-space}
+    Let $(X,d)$ be a metric space.
+
+    If $X$ is complete, then $X^*=X$ and $\phi(x)= X$.
+
+    If $X$ is not complete:
+        \begin{itemize}
+            \item Form the set $\mathcal{C}(X)$ of all possible Cauchy sequences in $X$. $\mathcal{C}(X) \neq  \emptyset$ as $(x,x,x,\dots)$ is a Cauchy sequence.
+            
+            \item Define an \emph{equivalence relation} $\sim$ on $\mathcal{C}(X)$ by saying
+            \begin{equation}
+                (x_n)\sim(y_n)\iff d(x_n, y_n)\to 0 \text{ as } n \to \infty
+            \end{equation}
+            
+            \item Construct the set of all equivalence classes under this relation; $\mathcal{C}(X)/\sim$. An element of $\mathcal{C}(X)/\sim$ follows
+                \begin{equation}
+                    [(x_n)] = \{(y_n)\,\vert\, (x_n)\sim (y_n)\}
+                \end{equation}
+
+            \item Extend the metric $d$ on $X$ to a metric $\hat{d}$ on $\mathcal{C}(X)/\sim$ by setting 
+            \begin{equation}
+                \hat{d}\left([(x_n)],[(y_n)]\right) = \lim\limits_{n\to\infty} d(x_n, y_n)
+            \end{equation}
+            and show that $\hat{d}$ is a metric and well-defined.
+
+            \item Define $\phi(x) = [\left(x\right)^\infty_{n=1}] = (x,x,x,\dots) \in \mathcal{C}(X)/\sim$ and prove that $\psi(x)$ is an isometry.
+
+            \item Show that $\overline{\phi(X)} = \mathcal{C}(X)/\sim$ = $X^*$
+
+            \item Show that any Cauchy sequence in $\mathcal{C}(X)/\sim$ converges to a limit in the space $\mathcal{C}(X)/\sim$. A Cauchy sequence in the space is of the form 
+            \begin{equation}
+            \left(\left[\left(x_n^{(1)}\right)\right],\left[\left(x_n^{(2)}\right)\right],\left[\left(x_n^{(3)}\right)\right],\left[\left(x_n^{(4)}\right)\right],\dots\right)
+            \end{equation}
+
+            \item Show uniqueness of the limit
+        \end{itemize}
+    \begin{proof}
+        The proof can be found in Section (1.5) of Srivali and Vasudeva 
+    \end{proof}
+\end{theorem}
+\pagebreak
 \end{document}
 
