@@ -224,7 +224,7 @@
 \pagenumbering{arabic}
 \pagestyle{mainbody}
 
-\begin{comment}
+
 \lecture{Lecture I}{Viewer.aspx?id=c3a52a78-486e-4e1d-88fc-b083009b9766}{
 Lecture One introduces the concept of a \emph{metric} as a generalisation of the notion of distance between two
 points in a set. Three metrics on $\mathbb{R}^2$ and $\mathbb{R}^N$
@@ -801,20 +801,14 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
         \captionof{figure}{A closed set $ F $ contains its boundary points.}
     \end{minipage}
 \end{definition}
-\begin{example}{Subset vs. Subspace}{subset-subspace}
-    Consider $ (\mathbb{R}, d) $ with $ A = (0, 1) \cup (1, 2) $. If $ A $ is
-    considered as a \emph{subset} of $ \mathbb{R} $, then $ \partial A = \{0, 1,
-    2 \} $. Hence, $ A \cap \partial A = \emptyset $, and $ A $ is open by
-    \cref{definition:open-closed-clopen-sets}.  Further, $ A $ is not closed,
-    since $ \partial A \not\subseteq A $.
-
-    If $ A $ is considered as a \emph{subspace} of $ \mathbb{R} $, then $
-    \partial A = \emptyset $, since $ \{ 0, 1, 2 \} \not\subseteq A $, and we
-    cannot consider the points outside of the subspace when determining its
-    topology. Hence, $ A $ is closed. But $ A \cap \partial A = \emptyset $,
-    since $ \partial A = \emptyset $; thus $ A $ is also open, and is ultimately
-    clopen when interpreted as a subspace.
-\end{example}
+\begin{theorem}{Interior, Boundary and Exterior of a subspace}{subset-subspace}
+    For any sub-space $A$ of $X$, its interior $A^o = A$  and its boundary $\partial A =$ its exterior $A^e=\emptyset$. 
+    \begin{proof}
+        For any sub-space, its ``view" is restricted to $A$. Therefore its complement $A^c = \emptyset$.\\
+        This means that no boundary point $\partial A$ can exist, since the intersection of the ball $B(x, \epsilon)$, where $x \in \partial A$, with $A^c$ will always be empty.\\
+        It also follows that $A^e$ is empty and so $A^o = A$.
+    \end{proof}
+\end{theorem}
 \pagebreak
 
 \lecture{Lecture V}{Viewer.aspx?id=dbcb156d-d828-454f-929d-b091009bf65b}{
@@ -921,7 +915,7 @@ For a metric space $(X,d)$, its set of boundary points $\partial X = \emptyset$.
     \begin{equation}
         \begin{split}
         A \text{ is open} &\iff A^c \text{ is closed}\\
-        &\iff \partial A\cup \A = \emptyset\\
+        &\iff \partial A\cap A = \emptyset\\
         &\iff \text{For any }x\in A, \exists \epsilon > 0, \text{ such that } B(x, \epsilon) \subseteq A
     \end{split}
     \end{equation}
@@ -1508,7 +1502,7 @@ Let $\vec{x}_n \in \mathbb{R}^k$, where $\vec{x}_n = (x_1^{(n)}, x_2^{(n)},\dots
 \begin{proof}
     We will prove this for $(X,d_\infty)$.
 \iffforward Suppose $\vec{x}_n \to \vec{x}$ as $n \to \infty$. \\
-Let $\epsilon>0$ be given. Then, by \cref{definition:conv-equiv}, there exists $N>0$ such that $d_\infty(\vec{x}_n, \vec{x})<\epsilon$ for all $n>N$. That is, $\max\limits_{1\leq i \leq k}\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$, and so, $\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$ and $1\leq i \leq k$.\\
+Let $\epsilon>0$ be given. Then, by \cref{theorem:conv-equiv}, there exists $N>0$ such that $d_\infty(\vec{x}_n, \vec{x})<\epsilon$ for all $n>N$. That is, $\max\limits_{1\leq i \leq k}\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$, and so, $\vert x_i^{(n)}-x_i \vert < \epsilon$ for all $n>N$ and $1\leq i \leq k$.\\
 But this means the real sequence $\left(x_i^{(n)}\right)^\infty_{n=1}$ converges to $x_i$.
 
 \iffbackward Suppose for each $i \in \{1,2,\dots, k\}$, the sequence $\left(x_i^{(n)}\right)^\infty_{n=1}$ converges to $x_i$ as $n \to \infty$.\\
@@ -1547,7 +1541,7 @@ We will compare convergence in the $d_2$ metric and the $d_\infty$ metric:
 Thus, different metrics on the same set may lead to a different convergence.
 \end{example}
 \begin{theorem}{Equivalent metrics have the same convergent sequences}{equiv-metric-same-conv}
-    Suppose that $(X,d)$ and $\e(Y,\Tilde{d})$ are \emph{equivalent}(\cref{definition: topological-equivalence}), i.e. there exists $\epsilon>0$ such that 
+    Suppose that $(X,d)$ and $(Y,\Tilde{d})$ are \emph{equivalent}(\cref{definition:topological-equivalence}), i.e. there exists $\epsilon>0$ such that 
     \begin{equation}
         \frac{1}{\lambda}\Tilde{d}(x,y)\leq d(x,y) \leq \lambda\Tilde{d}(x,y)
     \end{equation} 
@@ -1563,7 +1557,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{proof}
 \end{theorem}
 \pagebreak
-\end{comment}
+
 
 \lecture{Lecture IX}{Viewer.aspx?id=0fa218ae-7c44-465c-b963-b09f009bd3ea}{
     Lecture Nine introduces the uniqueness of a limit for a given sequence, the definition for point-wise convergence along with Cauchy and complete sequences. It also provides a topological definition for continuous functions.
@@ -1576,7 +1570,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     \begin{proof}
         Assume $x\neq y$, then $d(x,y) = \epsilon >0$.\\
         Set $\delta=\epsilon/2$.\\
-        As $x_n \to x$  as $n \to \infty$ then, by \cref{definition: conv-equiv}, there exists $N = N(\delta) > 0$ such that $d(x_n, x) < \delta = \epsilon/2$ for all $n>N$. Also, there exists $\hat{N} = N(\delta) > 0$ such that $d(x_n, y) < \delta = \epsilon/2$ for all $n>\hat{N}$.\\
+        As $x_n \to x$  as $n \to \infty$ then, by \cref{theorem:conv-equiv}, there exists $N = N(\delta) > 0$ such that $d(x_n, x) < \delta = \epsilon/2$ for all $n>N$. Also, there exists $\hat{N} = N(\delta) > 0$ such that $d(x_n, y) < \delta = \epsilon/2$ for all $n>\hat{N}$.\\
         Set $M = \max\{N, \hat{N}\}$, then both the above conditions should be held for all $n>M$.
 
         Using the triangle inequality, for all $n>M$, 
@@ -1699,7 +1693,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     
     Then, $\left(x_n\right)^\infty_{n=1}$ is convergent and $\lim\limits_{n\to\infty}x_n = \lim\limits_{k\to\infty}x_{n_k}=x$
     \begin{proof}
-        By \cref{conv-defn}It is sufficient to show that for any $\epsilon>0$, there exists $N>0$ such that $d(x_n,x)<\epsilon$ for all $n>N$. 
+        By \cref{definition:conv-defn}It is sufficient to show that for any $\epsilon>0$, there exists $N>0$ such that $d(x_n,x)<\epsilon$ for all $n>N$. 
 
         Let $\epsilon>0 be given$. \\
         By definition of Cauchy, we can find $N_1>0$ such that $d(x_n,x_m)<\epsilon/2$ for an $n, m>N_1$.\\
@@ -1769,9 +1763,11 @@ Thus, different metrics on the same set may lead to a different convergence.
             \item Show uniqueness of the limit
         \end{itemize}
     \begin{proof}
-        The proof can be found in Section (1.5) of Srivali and Vasudeva 
+        The proof can be found in Section (1.5) of Sriv
+        Srirali and Vasudeva 
     \end{proof}
 \end{theorem}
 \pagebreak
+
 \end{document}
 
