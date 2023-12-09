@@ -224,7 +224,7 @@
 \pagenumbering{arabic}
 \pagestyle{mainbody}
 
-
+\begin{comment}
 \lecture{Lecture I}{Viewer.aspx?id=c3a52a78-486e-4e1d-88fc-b083009b9766}{
 Lecture One introduces the concept of a \emph{metric} as a generalisation of the notion of distance between two
 points in a set. Three metrics on $\mathbb{R}^2$ and $\mathbb{R}^N$
@@ -1768,6 +1768,129 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{proof}
 \end{theorem}
 \pagebreak
+\end{comment}
 
+\lecture{Lecture XI}{Viewer.aspx?id=227c74d2-ed70-4345-bed6-b0ad00abd4d4}{
+    Lecture Eleven begins with a simple proof to show the k-dimensional Euclidean space is complete, followed by a generalisation of the first of three C's of metric spaces: continuity, using $\epsilon$-$\delta$. It then ends with the discussion and proof for 5 definitions of continuity.
+}{\DTMdisplaydate{2023}{11}{7}{Tuesday}}
+\begin{example}{Steps to show (non/)completeness}{check-complete}
+    To show a space is not complete requires finding one Cauchy sequence that \emph{converges} to a point not in the space.
+
+    To show a space is complete:
+    \begin{itemize}
+        \item Start with an arbitrary Cauchy sequence $(x_n)_{n=1}^\infty$
+        \item Construct a candidate limit $x$
+        \item Show that $x \in X$
+        \item Show that $\lim_{n\to\infty}x_n=x$
+    \end{itemize}
+    This can be demonstrated by showing the metric space $(\mathbb{R}^k, d_\infty)$ is complete.
+
+    \begin{proof}
+        Take a Cauchy sequence $(\vec{x}_n)_{n=1}^\infty \in \mathbb{R}^k$. Recall notation: $\vec{x}_n=(x_n^{(1)},x_n^{(2)},x_n^{(2)}, \dots,x_n^{(k)})$. We know that the sequence is Cauchy implies that, given $\epsilon>0$, there exists $N>0$ such that $d_\infty(\vec{x}_n, \vec{x}_m)<\epsilon$ for all $n,m>N$. 
+
+        So $\max\{\vert\vec{x}_n^{(i)}-\vec{x}_m^{(i)}\vert\}<\epsilon$ for all $n,m>N$. 
+
+        Therefore, each real sequence $(x_n^{(i)})_{n=1}^\infty$ is Cauchy. But $\mathbb{R}$ is complete and there exists $x_i$ such that $\lim_{n\to\infty}x_n^{(i)} = x_i$:
+        \begin{align*}
+            \left(x_1^{(1)},x_1^{(2)},\dots,x_1^{(k)}\right) &= \vec{x}_1\\
+            \left(x_2^{(1)},x_2^{(2)},\dots,x_2^{(k)}\right) &= \vec{x}_2\\
+            \left(x_3^{(1)},x_3^{(2)},\dots,x_3^{(k)}\right) &= \vec{x}_3\\
+            &\shortvdotswithin{=}\notag
+            \left(x_n^{(1)},x_n^{(2)},\dots,x_n^{(k)}\right) &= \vec{x}_n\\
+            &\shortvdotswithin{=}\notag 
+        \end{align*}
+        Thus, the sequence $(\vec{x}_n)^\infty_{n=1}$ converges to $\vec{x}=(x_1,x_2,x_3, \dots, x_k) \iff \left(x_n^{(i)}\right)^\infty_{n=1}$ converges to $x_i$.
+
+        Thus, $(\vec{x}_n) \in (\mathbb{R})^\mathbb{N}$ is convergent to $(\vec{x})\in \mathbb{R}^k$  and so $(\mathbb{R}^k, d_\infty)$ is complete.
+    \end{proof}
+\end{example}
+\begin{definition}{The $\epsilon$-$\delta$ definition of continuity}{eps-del-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+    
+    $f$ is continuous at $x_0 \in X \iff$ for any $\epsilon>0$, there exists $\delta>0$ such that $\hat{d}(f(x), f(x_0))<\epsilon$ whenever $d(x,x_0)<\delta$. 
+\end{definition}
+\begin{definition}{The $\epsilon$-$\delta$ ball definition of continuity}{eps-del-ball-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+
+    $f$ is continuous at $x_0 \in X \iff$ for any $\epsilon>0$, there exists $\delta>0$ such that $f(B(x_0,\delta))\subseteq B(f(x_0,\epsilon))$ 
+
+    \begin{proof}
+        From \cref{definition:eps-del-defn}, we find that $d(x,x_0)<\delta$ is equivalent to creating an open ball around $x_0$ of length $\delta$: $B(x_0,\delta)$. 
+        
+        If $f$ is continuous, then for all points $x \in B(x_0,\delta)$, it is true that $\hat{d}(f(x_0),f(x))<\epsilon$. This, similarly, is equivalent to creating an open ball around $f(x_0)$ of length $\epsilon$: $B(f(x_0), \epsilon)$.
+
+        Therefore, $f(B(x_0,\delta))\subseteq B(f(x_0,\epsilon))$.
+    \end{proof}
+    
+    
+\end{definition}
+\begin{definition}{The open set definition of continuity}{open-set-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+
+    $f$ is continuous at $x_0 \in X \iff$ for any open set $V \subseteq Y$ with $f(x_0)\in V$, there exists an open ball $B \subseteq X$ with $x_0 \in B$ and $f(B)\subseteq V$.
+
+    \begin{proof}
+        Let $V$ be open in Y. By \cref{open-def}, there exists $\epsilon>0$ such that $B(y, \epsilon)\subseteq V$ for all $y \in V$, where $y=f(x_0)$.
+
+        From \cref{definition:eps-del-ball-defn}, we know there exists an open ball $B(x_0, \delta)$ such that $f(B) \subseteq B(f(x_0),\epsilon) = V$.
+    \end{proof}
+    
+\end{definition}
+\begin{definition}{Topological definition of continuity}{cont-topological-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+    
+    $f$ is continuous at $x_0 \in X \iff$ for any open set $V \subseteq Y$, there exists an open set $U \subseteq X$ with $x_0 \in U$ and $f(U)\subseteq V$.
+    \begin{proof}
+        We can derive this from \cref{definition:open-set-defn} by replacing the open ball with an open set.
+    \end{proof}
+\end{definition}
+\begin{definition}{Sequential definition of continuity}{cont-seq-defn}
+    Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+    
+    $f$ is continuous at $x_0 \in X \iff$ for any sequence $x_n$,  $\lim\limits_{n \to \infty}f(x_n) = f(x_0) $ whenever $\lim\limits_{n \to \infty}x_n = x_0$
+\end{definition}
+\begin{theorem}{All 5 definitions of continuity are equivalent}{cont-defn-equiv}
+\begin{equation}
+        \begin{split}
+        \text{\cref{definition:eps-del-defn}} \implies \text{\cref{definition:eps-del-ball-defn}} \implies \text{\cref{definition:open-set-defn}} \implies\\
+        \text{\cref{definition:cont-topological-defn}}\implies \text{\cref{definition:cont-seq-defn}}\implies \text{\cref{definition:eps-del-defn}}
+    \end{split}
+    \end{equation}
+    We have already shown \cref{definition:eps-del-defn} $\implies$ \cref{definition:eps-del-ball-defn} $\implies$ \cref{definition:open-set-defn} $\implies$ \cref{definition:cont-topological-defn} in their respective definitions.
+    We now need to show \cref{definition:cont-topological-defn}$\implies$\cref{definition:cont-seq-defn} and \cref{definition:cont-seq-defn}$\implies$ \cref{definition:eps-del-defn}
+    \begin{proof}
+        \textbf{\cref{definition:cont-topological-defn}$\implies$\cref{definition:cont-seq-defn}}:
+
+        Let $x_0\in X$ and $(x_n)^\infty_{n=1}$, a sequence in $X$ such that $x_n \to x_0$ as $n \to \infty$.
+
+        Assuming \cref{definition:cont-topological-defn} is true, it is sufficient to show that $f(x_n)\to f(x_0)$ as $n \to \infty$. 
+        
+        Let $V$ be open in $Y$ and $f(x_0)\in V$. By \cref{definition:cont-topological-defn}, there exists an open set $U \subseteq X$ such that $x_0 \in U$ and $f(U)\subseteq V$. But $U$ is open and hence there exists an $\epsilon >0$ such that $B(x_0, \epsilon)\subseteq U$.
+
+        As $x_n \to x_0$, we can find $N>0$ such that $d(x_n, x_0)<\epsilon$ for all $n>N$. This is equivalent to $x_n \in B(x_0, \epsilon)$ for all $n>N$.
+
+        Thus, $f(x_n)\in f(U) \subseteq V$ for all $n>N$ which is equivalent to $f(x_n) \in f(B(x_0,\epsilon))\subseteq B(f(x_0),\epsilon)$, which implies $d(f(x_n),f(x_0))<\epsilon$ for all $n>N$. 
+        
+        Therefore, by \cref{definition:conv-defn}, $f(x_n)\to f(x_0)$ as $n \to \infty$ and so \cref{definition:cont-topological-defn}$\implies$\cref{definition:cont-seq-defn} holds.
+
+        \textbf{\cref{definition:cont-seq-defn}$\implies$ \cref{definition:eps-del-defn}} 
+
+        Using contrapositive: $\neg$\cref{definition:eps-del-defn}$\implies\neg$\cref{definition:cont-seq-defn}
+
+        ($\neg$\cref{definition:eps-del-defn}): There exists $\epsilon>0$ such that for all $\delta>0$, we have $\hat{d}(f(x),f(x_0))\geq\epsilon$ for some $x \in X$, which satisfies  $d(x,x_0)<\delta$.
+
+        ($\neg$\cref{definition:eps-del-defn}): For any sequence $x_n$, $f(x_n) \not\to f(x_0)$ whenever $x_n \to x_0$ as $n \to\infty$
+
+        For each $n \in \mathbb{N}$ we define the set:
+        \begin{equation}
+            A_n = \{ x^\prime \in X : d(x', x_0) < 1/n \text{ and } \hat{d}(f(x^\prime),f(x_0))\geq\epsilon\}
+        \end{equation}
+        From above, this set is non-empty. Pick an element $x_n$ from $A_n$.\\
+        Then $x_n \to x$ as $n \to \infty$ (since $d(x_n,x)<1/n)$.\\
+        But, $\hat{d}(f(x),f(x_0))\geq\epsilon>0$ so $f(x_n) \not\to f(x)$ as $n \to \infty$, which establishes $\neg$\cref{definition:cont-seq-defn}.
+
+        Therefore, $\neg$\cref{definition:eps-del-defn}$\implies\neg$\cref{definition:cont-seq-defn}  and so \cref{definition:cont-seq-defn}$\implies$ \cref{definition:eps-del-defn} holds.
+    \end{proof}
+\end{theorem}
 \end{document}
 
