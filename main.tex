@@ -23,6 +23,7 @@
 ]{draftwatermark}
 \usepackage[en-GB]{datetime2}
 \usepackage{amsmath}
+\usepackage{mathrsfs}
 \usepackage[missing=master]{gitinfo2}
 \usepackage{fancyhdr, anyfontsize, amsthm, mathtools, amssymb, tcolorbox,
     tocloft, titlesec, lastpage, enumitem, tikz}
@@ -1892,5 +1893,90 @@ Thus, different metrics on the same set may lead to a different convergence.
         Therefore, $\neg$\cref{definition:eps-del-defn}$\implies\neg$\cref{definition:cont-seq-defn}  and so \cref{definition:cont-seq-defn}$\implies$ \cref{definition:eps-del-defn} holds.
     \end{proof}
 \end{theorem}
+\pagebreak
+
+\lecture{Lecture XII}{Viewer.aspx?id=67becd92-a94f-4318-a4ae-b0af00ac252a}{
+    Lecture Twelve continues to discuss continuity, while formally defining global continuity in multiple ways. It then discusses the open set characteristic of continuity, and finishes by discussing the set of continuous and bounded functions.
+}{\DTMdisplaydate{2023}{11}{9}{Thursday}}
+\begin{definition}{Topological definition of global continuity}{global-cont-topological-defn}
+   Let $f: X\to Y$ be a function from $(X,d)$ to $(Y,\hat{d})$.
+    
+    $f$ is continuous at \emph{all} $x \in X \iff$ for any open set $V \subseteq Y$, the set $f^{-1}(V)\subseteq X$ is open.
+
+    Equivalently, 
+    \begin{align}
+        f \text{ is continuous at \emph{all} } x \in X &\iff f^{-1}(V)\in T_d \text{ whenever } V \in T_{\hat{d}}\\
+        &\iff f^{-1}(F) \text{ is closed whenever } F \text{ is closed} 
+    \end{align}
+
+    \begin{proof}
+        Take an open set $V \subseteq Y$. For any point $y \in V$:
+        
+        If $V = \emptyset$ then $f^{-1}(V)=\emptyset$ and we are done.
+
+        If $y \not\in f(x)$ then the set of points $x$ such that $f(x)=y$: $F_y = \emptyset$, so $f^{-1}(V)=\emptyset$ and we are done. 
+
+        If $F_y \neq \emptyset$ then there exists $x \in X$ such that $f(x) = y$.\\
+        Then by assumption that $V$ is open and that $f$ is continuous, there exists an open ball $B \subseteq X$ such that $ x\in B$ and $F(B) \subseteq V$.\\
+        So 
+        \begin{equation}
+            f^{-1}(V) = \bigcup\limits_{y\in V} F_y  = \bigcup\limits_{x\in f^{-1}(V)}B_x
+        \end{equation}
+    By \cref{theorem:topology-open-balls}, $\bigcup B_x = f^{-1}(V)$ is an element of the topology $T_d$. 
+    \end{proof}
+\end{definition}
+\begin{theorem}{Continuity is transitive}{cont-transitive}
+    Let $X, Y, Z$ be metric spaces and $f: X\to Y$ be continuous and $g: Y \to Z$ be continuous. Then $g \circ f : X \to Z$ is continuous.
+    \begin{proof}
+        Let $V \subseteq Z$ be open. Then $g^{-1}(V) \subseteq Y$ is open $\implies f^{-1}(g^{-1}(V))$ is open in $X$
+
+        As $(g\circ f)^{-1}(V) = f^{-1}(g^{-1}(V))$ is open, it follows that $(g\circ f)$ is continuous by \cref{definition:global-cont-topological-defn}.
+    \end{proof}
+    (Note: a composition can be continuous but $f$ or $g$ not)  
+\end{theorem}
+\begin{theorem}{A function mapping a point to a set of functions is continuous}{function-mapping-set}
+    Let $f_1, f_2, \dots, f_k$ be continuous functions from $(X,d)$ to $(\mathbb{R}^k,d)$.
+
+    Then $F: X \to \mathbb{R}^k$, where $F(x) = (f_1(x), f_2(x), \dots, f_k(x))$ is continuous.
+    \begin{proof}
+        Suppose that $x_n$ is a sequence in $X$ and $x_n \to x$ as $n \to \infty$.
+
+        As $f_i$ is continuous, by \cref{definition:cont-seq-defn}, we know that $f_i(x_n)\to f_i(x)$ as $n \to \infty$.\\
+        Recall from \cref{example:check-complete}, the sequence 
+        \begin{equation}
+            F(x_n) \to F(x) \text{ where } F(x) = (f_1(x),f_2(x),\dots,f_k(x))
+        \end{equation}
+        Therefore, by \cref{definition:cont-seq-defn}, since $F(x_n)\to F(x)$ as $n \to \infty$, the function $F$ is continuous.
+    \end{proof}
+\end{theorem}
+\begin{theorem}{\texorpdfstring{$C([0,1])$}{The set of continuous functions} can be generalised to any metric}{generalise-set-continuous}
+    Given $(X,d)$ and $(Y,\hat{d})$, the set of continuous and bounded functions $\mathscr{C}$ with the sup-metric $d_\infty$: $(\mathscr{C}(X,Y),d_\infty)$ is a metric sub-space.
+    \begin{proof}
+        Start with $C([0,1])$. We cannot use $d_1$ and $d_2$ as they induce notions of integration, which cannot be generalised to other metrics. We must therefore use the sup-metric $d_\infty$ as it uses the concept of a supremum.
+        \begin{equation}
+            d_\infty(f,g)=\sup\{\vert f(x)-g(x)\vert :  x \in X\} 
+        \end{equation}
+        We then pair the set $C(X,Y)$ with $d_\infty$. However, since $Y$ is paired with the metric $\hat{d}$, we have to modify $d_\infty$ accordingly:
+        \begin{equation}
+            d_\infty(f,g)=\sup\{\hat{d}(f(x),g(x))\, \vert \, x \in X\} 
+        \end{equation}
+        The problem here is since the range of $\hat{d}$ is $[0, \infty)$, there is no guarantee that such an upper bound will exist. It is therefore insufficient to only use the set of continuous functions.\\
+
+        Consider the set of bounded functions. Let $f:X \to Y$.
+        \begin{align}
+            f \text{ is bounded} &\iff \text{there exists an open ball } B \subseteq Y \text{ such that } f(x)\in B \text{ for all } x \in X\\
+            &\iff \text{there exists a } z \in Y \text{ and } M \in [0,\infty) \text{ such that } f(x)\in B(z,M) \text{ for all } x \in X\\
+            &\iff 
+        \end{align}
+        The set of bounded functions can be denoted as $B(X,Y)$, and the set of all continuous and bounded functions $\mathscr{C}$, where
+        \begin{equation}
+            \mathscr{C}(X,Y) = B(X,Y) \cap C(X,Y)
+        \end{equation}
+        Therefore, $(\mathscr{C}(X,Y),d_\infty)$ is a metric sub-space.
+    \end{proof}
+\end{theorem}
+\pagebreak
+
+
 \end{document}
 
