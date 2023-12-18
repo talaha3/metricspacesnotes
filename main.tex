@@ -1769,7 +1769,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{proof}
 \end{theorem}
 \pagebreak
-\end{comment}
+
 
 \lecture{Lecture XI}{Viewer.aspx?id=227c74d2-ed70-4345-bed6-b0ad00abd4d4}{
     Lecture Eleven begins with a simple proof to show the k-dimensional Euclidean space is complete, followed by a generalisation of the first of three C's of metric spaces: continuity, using $\epsilon$-$\delta$. It then ends with the discussion and proof for 5 definitions of continuity.
@@ -1976,7 +1976,48 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{proof}
 \end{theorem}
 \pagebreak
+\end{comment}
+\lecture{Lecture XIII}{Viewer.aspx?id=fd3b00e1-b523-45ef-bab5-b0b400ac5f0b}{
+    Lecture Thirteen continues looking at the set of continuous functions, and using this to define a stronger notion of uniform convergence. It then goes on to introduce contractions and the Contraction Mapping Theorem.
+}{\DTMdisplaydate{2023}{11}{14}{Tuesday}}
+\begin{definition}{A stronger notion of convergence: uniform convergence}{unif-conv}
+    Consider the metric space $\mathscr{C}(X,\mathbb{K})$ where $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ equipped with the $d_\infty$ metric.
 
+    Let $(f_n)_{n=1}^\infty$ be a sequence from $(\mathscr{C},d_\infty)$.
 
+    So $f_n \to f$ as $n \to \infty \iff$ for any $\epsilon>0$, there exists $N>0$ such that $d_\infty(f_n,f)<\epsilon$ for all $n>N$.
+
+    As $d_\infty(f_n,f)=\sup\{\vert f_n(x) - f(x)\vert : x \in X\} < \epsilon$, $\vert f_n(x) - f(x)\vert$ is independent of $x$ and is always less than $\epsilon$ for all $n>N$, $x \in X$. This is \emph{uniform convergence}.
+
+    Contrast this with \emph{point-wise convergence}: Take $x \in X$ and fix it. Consider the sequence $f_n(x) \in \mathbb{K}^\mathbb{N}$.
+    $f_n \to f$ point-wise $\iff$ $f_n(x) \to f(x)$ as $n\to\infty$ for any $x \in X$. This is dependent on both $\epsilon$ and $x$, unlike \emph{uniform convergence}. 
+
+    So, uniform convergence $\implies$ point-wise convergence, but point-wise convergence $\not\implies$ uniform convergence
+\end{definition}
+\begin{example}{Point-wise does not imply uniform}{pointwise-not-unif}
+    Take a sequence $f_n$ from $C([0,1])$, where $f_n(t) =t^n$.
+
+    \emph{Point-wise.} Take a fixed $t$. Then, $f_n(t) \to 0$ as $n \to \infty$. Therefore it is point-wise convergent.
+
+    \emph{Uniform.} Take $d_\infty$. $d_\infty(f_n,f)=\sup\{|t^n-0|\}=\sup\{|t^n|\} = 1 \not< \epsilon$. Therefore, it is not point-wise convergent.
+\end{example}
+\begin{definition}{Fixed points}{fixed-point-defn}
+    Let $f:X\to X$ be a function and $(X,d)$ a metric space. A \emph{fixed point} of $f$ is a point $y\in X$ such that $y=f(y)$.
+\end{definition}
+\begin{definition}{Lipschitz function}{lipschitz-defn}
+    Let $f:X\to X$ be a function from the metric space $(X,d)$ to the metric space $(Y,\hat{d})$. Then $f$ is \emph{Lipschitz} if and only if, for all $x, x^\prime \in X$,
+    \begin{equation}
+        \hat{d}(f(x),f(x^\prime)) \leq \lambda d(x,x^\prime)
+    \end{equation}
+    for some $\lambda\in[0,\infty)$. The quantity $\lambda$ is known as the \emph{Lipschitz factor}. A \emph{strict contraction} is a Lipschitz function in $[0,1)$.
+\end{definition}
+\begin{theorem}{Contraction Mapping Theorem}{cmt-defn}
+    Let $(X,d)$ be a \emph{complete} metric space and $f:X \to X$ a \emph{contraction mapping}. Then $f$ has a unique fixed point, say $y \in X$ and further, a sequence $(x_n)^\infty_{n=1}$ where 
+    \begin{equation}
+        x_n = f(x_{n-1})
+    \end{equation}
+    converges to $y$. That is, $x_n \to y$ as $n \to \infty$.
+\end{theorem}
+\pagebreak
 \end{document}
 
