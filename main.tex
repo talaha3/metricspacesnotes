@@ -2011,13 +2011,191 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{equation}
     for some $\lambda\in[0,\infty)$. The quantity $\lambda$ is known as the \emph{Lipschitz factor}. A \emph{strict contraction} is a Lipschitz function in $[0,1)$.
 \end{definition}
-\begin{theorem}{Contraction Mapping Theorem}{cmt-defn}
+\begin{definition}{Contraction Mapping Theorem}{cmt-defn}
     Let $(X,d)$ be a \emph{complete} metric space and $f:X \to X$ a \emph{contraction mapping}. Then $f$ has a unique fixed point, say $y \in X$ and further, a sequence $(x_n)^\infty_{n=1}$ where 
     \begin{equation}
         x_n = f(x_{n-1})
     \end{equation}
     converges to $y$. That is, $x_n \to y$ as $n \to \infty$.
-\end{theorem}
+
+    Every contraction mapping is \emph{Lipschitz continuous} and therefore uniform continuous.
+\end{definition}
 \pagebreak
+
+\lecture{Lecture XIV}{Viewer.aspx?id=2f835cff-32fb-409b-9aa9-b0b600ac611b&query=16\%2F11}{
+    Lecture Fourteen continues looking at the set of continuous functions, and using this to define a stronger notion of uniform convergence. It then goes on to introduce contractions and the Contraction Mapping Theorem.
+}{\DTMdisplaydate{2023}{11}{16}{Thursday}}
+\begin{theorem}{Proof for Contraction Mapping Theorem}{cmt-proof}
+    Contraction Mapping Theorem: \cref{definition:cmt-defn}
+    \begin{proof}
+        Take any $x_0 \in X$ and define the sequence $x_n = f(x_{n=1})$ for $n\geq 1$.
+
+        As $f$ is a strict contraction, there must be $k\in[0,1)$ such that $d(f(x),f(x^\prime)) \leq k d(x,x^\prime)$ for all $x, x^\prime\in X$.
+
+        We need to show that $(x_n)^\infty_{n=1}$ is Cauchy, i.e. there exists $y \in X$ such that $x_n\to y$ as $n \to \infty$.
+
+        Consider 
+        \begin{align}
+            d(x_n,x_{n-1}) &= d(f(x_{n-1}), f(x_{n-2})) && \text{By definition of sequence}\\ 
+            &\leq k d(x_{n-1}, x_{n-2}) && \text{Strict contraction}\\
+            &\leq k\cdot k d(x_{n-2}, x_{n-3}) \\
+            &= k^2 d(x_{n-2}, x_{n-3})  \\
+            &\leq k^{n-1}d(x_1,x_0)  
+        \end{align}
+
+        Consider $m>n$, where $m=n+l$ for some $l \in \mathbb{N}$:
+        \begin{align}
+            d(x_m, x_n) &\leq d(x_m,x_{m-1})+d(x_{m-1},x_n) && \text{Triangle inequality}\\
+            &\leq d(x_m,x_{m-1})+d(x_{m-1},x_{m-2})+d(x_{m-2},x_n)\\
+            &\leq d(x_m,x_{m-1})+d(x_{m-1},x_{m-2})+\dots +d(x_{n+1},x_n)\\
+            &\leq k^{m-1}d(x_1,x_0)+ k^{m-2}d(x_1,x_0) + \dots + k^{n}d(x_1,x_0)\\
+            &= d(x_1,x_0)(k^{m-1}+k^{m-2}+\dots+k^n)\\
+            &= k^nd(x_1,x_0)(k^{m-1-n}+k^{m-2-n}+\dots+k+ 1)\\
+            &= k^nd(x_1,x_0)(k^{l-1}+k^{l-2}+\dots+k+ 1)
+        \end{align}
+        Recall a geometric series with common ratio $r$ of the form $1+r+r^2+\dots+r^l\to \frac{1}{1-r}$ if $|r|<1$.
+        
+        This means $d(x_m, x_n)\leq k^nd(x_1,x_0)(k^{l-1}+k^{l-2}+\dots+k+ 1) \leq \frac{k^n}{1-k}d(x_1,x_0)$
+
+        So, 
+        \begin{align}
+            d(x_m, x_n) &\leq k^n(\frac{d(x_1,x_0)}{k-1}\\
+            &= k^n\alpha \text{ where } \alpha = \frac{d(x_1,x_0)}{k-1} 
+        \end{align}
+        is constant and tends to $0$ as $n \to \infty$. Thus, $(x_n)^\infty_{n=1}$ is Cauchy. 
+
+        Completeness of $(X,d)$ tells us that there exists $y \in X$ such that $x_n \to y$ as $n \to \infty$.
+        We now need to show that $y$ is a fixed point of $f$.
+
+        Recall contractions are continuous, that is
+        \begin{equation}
+            x_n \to y \text{ as } n \to \infty  \iff f(x_n)\to f(y) \text{ as } n \to \infty 
+        \end{equation}
+        We know $x_n \to y$, but $x_1 = f(x_0)$, $x_2 = f(x_1)$, $x_n = f(x_{n-1})$. Thus, $f(x_0), f(x_1), f(x_2),\dots$ is just $x_1$, $x_2$, $x_3$, $\dots$\\
+        As limits are unique, $\lim_{n\to\infty}f(x_n) = \lim_{n\to\infty}x_n$. 
+        
+        Given $\lim\limits_{n\to\infty}f(x_n) = f(y)$ by continuity and $\lim\limits_{n\to\infty}x_n=y$, then $f(y)=y$.\\
+
+        We now need to show uniqueness. \\
+        Suppose that $y'$ is another fixed point of $f$, that is, $f(y')=y'$.
+        
+        Consider 
+        \begin{align}
+            d(y,y')&=d(f(y), f(y')) \\
+            &\leq kd(y,y')
+        \end{align}
+        This is only true if $d(y, y')=0$ which implies $y=y'$.
+    \end{proof}
+\end{theorem}
+\begin{definition}{Using the Mean Value Theorem}{mvt-use}
+    Let $g: [a,b] \to X$ be continuous and differentiable.
+
+    Then, the Mean Value Theorem states that for any $x<y$ in $[a,b]$, there exists $c \in (x,y)$ such that \begin{equation}
+        f'(c) = \frac{f(y)-f(x)}{y-x}
+    \end{equation}
+
+    We can use this in the CMT as follows:
+    \begin{align}
+        f'(c) = \frac{f(y)-f(x)}{y-x} &\implies |f'(c)| = \frac{|f(y)-f(x)|}{|y-x|} \\
+        &\implies |y-x||f'(c)| = |f(y)-f(x)|\\
+        &\implies d(y,x)|f'(c)|=d(f(y),f(x))
+    \end{align}
+    Thus, if $|f'(c)| < 1$ then $f$ is a contraction mapping.
+\end{definition}
+\begin{theorem}{\texorpdfstring{$C([a,b],\mathbb{R})$ equipped with $d_\infty$}{The set of real continuous functions with a closed real domain equipped with the infinity metric } is complete }{cab-complete}
+\begin{proof}
+    Let $(f_n)^\infty_{n=1}$ be a Cauchy sequence in $(C([a,b], d_\infty)$.
+
+    Then for any $\epsilon>0$, there exists $N>0$ such that $d_\infty(f_n, f_m)<\epsilon$ for all $m,n >N$., where $d_\infty(f_n,f_m)=\sup\{|f_n(t)-f_m(t)| \, t \in [a,b]\}$.
+
+    So $|f_n(t)-f_m(t)| < \epsilon$ for all $m,n >N$ and all $t \in [a,b]$ and hence $(f_n(t))^\infty_{n=1}$ is Cauchy for each individual $t \in [a,b]$.
+
+    Then there exists $f_t$ at each individual $t$ such that $f_n(t) \to f_t$ as $n \to \infty$.
+
+    Define $f:[a,b] \to \mathbb{R}$ by setting $f(t) = f_t$.
+
+    To show $C([a,b], d_\infty)$ is complete, we need to prove that
+    \begin{itemize}
+        \item[i)] $f$ is continuous and hence is an element of $C([a,b])$
+        \item[ii)] $f_n \to f$ as $n \to \infty$ with respect to the $d_\infty$ metric.
+    \end{itemize}
+    Let $\epsilon>0$ be given. We know $(f_n)^\infty_{n-1}$ is Cauchy and hence there exists $N>0$ such that for all $m,n>N$ 
+    \begin{equation}
+        d_\infty(f_n, f_m)<\epsilon
+    \end{equation}
+    By definition of $d_\infty$, for all $t \in [a,b]$
+    \begin{equation}
+        |f_n(t)-f_m(t)| < \epsilon
+    \end{equation}
+    As $f_m(t)\to f(t)$, we can let $m \to \infty$ and deduce that for all $t \in [a,b]$ and all $n>N$
+    \begin{equation}
+        |f_n(t)-f(t)| \leq \epsilon
+    \end{equation}
+    This is exactly what is needed to show that for all $n>N$
+    \begin{equation}
+        d_\infty(f_n,f)\leq \epsilon
+    \end{equation} 
+    and it follows that $f_n \to f$ uniformly.
+
+    To show $f$ is continuous, we fix $t_0 \in [a,b]$ and let $\epsilon>0$ be given. We chose $f_n$ such that 
+    \begin{equation}
+        d_\infty(f,f_n)<\epsilon/3
+    \end{equation}
+    As $f_n$ is continuous, then we chose $\delta>0$ such that $|f_n(t_0)-f(t_0)|<\epsilon/3$. Now suppose that $t \in [a,b]$ and $|t-t_0|<\delta$, then 
+    \begin{align}
+        |f(t)-f(t_0)| &= |f(t)-f_n(t_0)+f_n(t_0)-f_n(t)+f_n(t)-f(t_0)|\\
+        &\leq |f(t)-f_n(t_0)| +|f_n(t_0)-f_n(t)| + |f_n(t)-f(t_0)|\\
+        &< \epsilon/3 + \epsilon/3 +\epsilon/3\\
+        &= \epsilon
+    \end{align}
+    This shows that $f$ is continuous at $t_0$ but $t_0$ was arbitrary, thus $f$ is continuous at all $t_0$.
+\end{proof}
+\end{theorem}
+\begin{example}{Fredholm equations}{fredholm-defn}
+    \begin{equation}
+        f(t) = v(t) + \frac{1}{\lambda}\int^b_a k(t,s)f(s) \,ds
+    \end{equation}
+    where $v(t)$ and the kernel $k(t,s)$ are given.
+
+    \emph{Assumptions.} $v$ is continuous on $[a,b]$ and $k$ is continuous on $[a,b]^2$.
+
+    \emph{Note. $F(t) = \frac{1}{\lambda}\int^b_a k(t,s)f(s) \,ds$}
+
+    As $k$ is continuous on $[a,b]^2$ then there exists $M>0$ such that $|k(s,t)\leq M|$ for all $s,t \in [a,b]$.
+
+    Define the function $T$ on $C([0,1],\mathbb{R})$ by 
+    \begin{equation}
+        (Tf)(t) = \frac{1}{\lambda}\int^b_a k(t,s)f(s) \,ds
+    \end{equation}
+    So a solution for 
+    \begin{equation}
+        f(t) = \frac{1}{\lambda}\int^b_a k(t,s)f(s) \,ds = (Tf)(t)
+    \end{equation}
+    So a solution $f$ for our original Fredholm equation is a fixed point of $T: C([a,b])\toC([a,b])$
+
+    We can therefore use the CMT.
+    \begin{align}
+        |(Tf)(t)-(Tg)(t)| &= \left\vert v(t) + \frac{1}{\lambda}\int^b_a k(t,s)f(s) \,ds-v(t)- \frac{1}{\lambda}\int^b_a k(t,s)g(s) \,ds\right\vert \\
+        &= \left\vert \frac{1}{\lambda}\int^b_a k(t,s)(f(s)-g(s) \,ds\right\vert\\
+        &\leq \frac{1}{\lambda}\int^b_a |k(t,s)|\cdot|(f(s)-g(s)| \,ds\\
+        &\leq \frac{1}{\lambda}\int^b_a M\cdot|(f(s)-g(s)| \,ds \\
+        &\leq \frac{M}{\lambda}\int^b_a |(f(s)-g(s)| \,ds \\
+    \end{align}
+    But $d_\infty(f,g)=\sup\{|f(s)-g(s)|\, s \in [a,b]\}$ and $|f(s)-g(s)| \leq d_\infty(f,g)$ for all $s \in [a,b]$ and therefore
+    \begin{align}
+        |(Tf)(t)-(Tg)(t)| &\leq \frac{M}{\lambda}\int^b_a d_\infty(f,g) \,ds \\
+        &= \frac{M}{\lambda}d_\infty(f,g)\int^b_a 1 \,ds\\
+        &= \frac{M}{\lambda}d_\infty(f,g)(b-a)
+    \end{align}
+    and thus we have 
+    \begin{align}
+        \sup\{|(Tf)(t)-(Tg)(t)| \, t \in [a,b]\} &= d_\infty(Tf, Tg)\\
+        &\leq \frac{M}{\lambda}d_\infty(f,g)(b-a)\\
+        &= \frac{M(b-a)}{\lambda}d_\infty(f,g)
+    \end{align}
+    So if we choose $\lambda>M(b-a)$ then $T$ is a contraction mapping by \cref{definition:cmt-defn}.
+\end{example}
+\pagebreak
+
 \end{document}
 
