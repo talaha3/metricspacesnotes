@@ -1976,7 +1976,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     \end{proof}
 \end{theorem}
 \pagebreak
-\end{comment}
+
 \lecture{Lecture XIII}{Viewer.aspx?id=fd3b00e1-b523-45ef-bab5-b0b400ac5f0b}{
     Lecture Thirteen continues looking at the set of continuous functions, and using this to define a stronger notion of uniform convergence. It then goes on to introduce contractions and the Contraction Mapping Theorem.
 }{\DTMdisplaydate{2023}{11}{14}{Tuesday}}
@@ -2196,6 +2196,84 @@ Thus, different metrics on the same set may lead to a different convergence.
     So if we choose $\lambda>M(b-a)$ then $T$ is a contraction mapping by \cref{definition:cmt-defn}.
 \end{example}
 \pagebreak
+\end{comment}
 
+\lecture{Lecture XV}{Viewer.aspx?id=9419a0e2-ee15-4738-abd4-b0bb00ac6e18&query=21\%2F11}{
+    Lecture Fifteen begins introduces the second of the 3 C's of Metric Spaces: Compactness. It provides a list of properties of compactness and creates a link between compactness, continuity, completeness and boundedness.
+}{\DTMdisplaydate{2023}{11}{21}{Tuesday}}
+\begin{definition}{Bolzano-Weierstrass Theorem}{bolzano-defn}
+    In the real space $\mathbb{R}$, any bounded sequence has a convergent sub-sequence.
+\end{definition}
+\begin{definition}{Heine-Borel Theorem}{heine-defn}
+    A set $K$ is \emph{compact} if and only if $K$ is closed and bounded.
+\end{definition}
+\begin{definition}{Sequential Compactness}{seq-compact-defn}
+    Let $(X,d)$ be a metric space.
+
+    Then $X$ is \emph{sequentially compact} if and only if every sequence in $X$ has a convergent sub-sequence.
+
+    Furthermore, if $K \subseteq X, (K\neq\emptyset)$ then $K$ is \emph{sequentially compact} if and only if $K$ is sequentially compact as a sub-space of $X$.
+
+    \emph{Remark.} For $K\subseteq X$ to be sequentially compact, it does not require $X$ to be sequentially compact.
+\end{definition}
+\begin{theorem}{Sequentially compact implies complete, closed and bounded}{compact-implies-complete}
+    Let $(X,d)$ be a metric space and $K \subseteq X$ be sequentially compact. Then 
+    \begin{itemize}
+        \item[i)] $K$ is complete and hence closed
+        \item[ii)] $K$ is bounded 
+    \end{itemize}
+    \begin{proof}
+        i) Let a sequence $(x_n)^\infty_{n=1}$ be Cauchy in $K$.
+
+            By \cref{definition:seq-compact-defn}, this sequence has a convergent sub-sequence $(x_{n_k})^\infty_{k=1}$. That is, there exists $x \in K$ such that $x_{n_k} \to x$ as $k \to \infty$.
+
+            From \cref{theorem: subsequences-conv}, a Cauchy sequence with a convergent sub-sequence is itself convergent and converges to the same limit $x$ as $(x_{n_k})^\infty_{k=1}$.
+
+            Therefore, $K$ is complete and hence closed (Exercise 3 Question 6i).
+            \\
+            
+            ii) Assume $K$ is not bounded, that is, for some $x \in X$ and any $r > 0$ then $K \not\subseteq B(x,r)$.
+
+            Take $n=1$ and fix $x_0 \in X$. As $K \not\subseteq B(x_0,r)$ for any $r$, there exists $x_1 \in K$ such that $x_1 \not\in B(x_0, 1)$.
+
+            Let $\delta_1 = d(x_0,x_1)$ and choose $r_2>\delta_1$ and consider the ball $B(x_0,r_2)$. As $K \not\subseteq B(x_0,r)$ for any $r$, there exists $x_2 \in K$ such that $x_2 \not\in B(x_0, \delta_1)$.
+
+            Let $\delta_2 = d(x_0,x_2)$ and choose $r_3>\delta_2$ and consider the ball $B(x_0,r_3)$. As $K \not\subseteq B(x_0,r)$ for any $r$, there exists $x_3 \in K$ such that $x_3 \not\in B(x_0, \delta_2)$.
+
+            Inductively, we can thus construct a sequence $(x_n)\in K$ such that $d(x_0, x_n) \to \infty$ as $n\to \infty$. Note that each $x_i$ is distinct from all its other predecessors. This means that $x_n$ has no convergent sub-sequences, which is a contradiction by \cref{definition:seq-compact-defn}.
+
+            Thus $K$ is bounded.
+    \end{proof}
+\end{theorem}
+\begin{theorem}{Continuous image of a sequentially compact set is sequentially compact}{cont-image-compact}
+    Take metric spaces $(X,d)$, $(Y, \hat{d})$ and a continuous function $f: X \to Y$.
+
+    Let $K \subseteq X$ be sequentially compact. Then $f(K) \subseteq Y$ is also sequentially compact. 
+\end{theorem}
+\begin{example}{Unit circle \texorpdfstring{$S_1$}{} in \texorpdfstring{$\mathbb{R}^2$}{two-dimensional Euclidean space} is sequentially compact}{unit-circle-compact}
+    Recall $S_1 = \{(x,y)\in \mathbb{R} \,\vert\, x^2+y^2=1\}$
+
+    Consider $f:[0,1]\to \mathbb{R}^2 : t \mapsto (\sin{4\pi t}, \cos{4\pi t})$. The function $f$ is continuous as $f_x=\sin{4\pi t}$ is continuous and $f_y=\cos{4\pi t}$ is continuous.
+
+    We know $[0,1]$ is sequentially compact by \cref{definition:heine-defn} and $S_1 \subset \mathbb{R}^2$, then by \cref{theorem:cont-image-compact}, $S_1$ is sequentially compact.
+\end{example}
+\begin{theorem}{Min-Max Theorem}{min-max}
+    Let $K \subseteq X$ and $K$ be sequentially compact.
+
+    If $f: K \to \mathbb{R}$ is continuous then there exists $x_{\min},x_{\max}\in K$ such that $f(x_{\min})=\inf\{|f(x)| \, x \in K\}$ and $f(x_{\max})=\sup\{|f(x)| \, x \in K\}$
+
+    \begin{proof}
+        $K$ is sequentially compact and $f$ is continuous. From \cref{theorem:cont-image-compact}, $f(K)\subseteq \mathbb{R}$ is sequentially compact.
+
+        But by \cref{theorem:compact-implies-complete},  $f(K)$ is then closed and bounded (as $\mathbb{R}$ is complete).
+
+        In $\mathbb{R}$, if $A \subseteq \mathbb{R}$ is closed and bounded, the infimum and supremum of $A$ exist and are boundary points of $A$. (From Real Analysis).
+
+        Hence, $\inf\{f(K)\} \in f(K)$ and $\sup\{f(K)\} \in f(K)$ as closed sets contain their boundary points.
+
+        Thus, there exists $x_{\min},x_{\max} \in K$
+        such that $f(x_{\min})=\inf$ and $f(x_{\max})=\sup$
+\end{proof}
+\end{theorem}
 \end{document}
 
