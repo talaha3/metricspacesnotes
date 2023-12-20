@@ -2199,7 +2199,7 @@ Thus, different metrics on the same set may lead to a different convergence.
 \end{comment}
 
 \lecture{Lecture XV}{Viewer.aspx?id=9419a0e2-ee15-4738-abd4-b0bb00ac6e18&query=21\%2F11}{
-    Lecture Fifteen begins introduces the second of the 3 C's of Metric Spaces: Compactness. It provides a list of properties of compactness and creates a link between compactness, continuity, completeness and boundedness.
+    Lecture Fifteen introduces the second of the 3 C's of Metric Spaces: Compactness, in the form of sequential compactness. It provides a list of properties for sequential compactness and creates a link between sequential compactness, continuity, completeness and boundedness.
 }{\DTMdisplaydate{2023}{11}{21}{Tuesday}}
 \begin{definition}{Bolzano-Weierstrass Theorem}{bolzano-defn}
     In the real space $\mathbb{R}$, any bounded sequence has a convergent sub-sequence.
@@ -2216,7 +2216,7 @@ Thus, different metrics on the same set may lead to a different convergence.
 
     \emph{Remark.} For $K\subseteq X$ to be sequentially compact, it does not require $X$ to be sequentially compact.
 \end{definition}
-\begin{theorem}{Sequentially compact implies complete, closed and bounded}{compact-implies-complete}
+\begin{theorem}{Sequentially compact implies complete, closed and bounded}{seq-compact-implies-complete}
     Let $(X,d)$ be a metric space and $K \subseteq X$ be sequentially compact. Then 
     \begin{itemize}
         \item[i)] $K$ is complete and hence closed
@@ -2245,7 +2245,7 @@ Thus, different metrics on the same set may lead to a different convergence.
             Thus $K$ is bounded.
     \end{proof}
 \end{theorem}
-\begin{theorem}{Continuous image of a sequentially compact set is sequentially compact}{cont-image-compact}
+\begin{theorem}{Continuous image of a sequentially compact set is sequentially compact}{cont-image-seq-compact}
     Take metric spaces $(X,d)$, $(Y, \hat{d})$ and a continuous function $f: X \to Y$.
 
     Let $K \subseteq X$ be sequentially compact. Then $f(K) \subseteq Y$ is also sequentially compact. 
@@ -2255,7 +2255,7 @@ Thus, different metrics on the same set may lead to a different convergence.
 
     Consider $f:[0,1]\to \mathbb{R}^2 : t \mapsto (\sin{4\pi t}, \cos{4\pi t})$. The function $f$ is continuous as $f_x=\sin{4\pi t}$ is continuous and $f_y=\cos{4\pi t}$ is continuous.
 
-    We know $[0,1]$ is sequentially compact by \cref{definition:heine-defn} and $S_1 \subset \mathbb{R}^2$, then by \cref{theorem:cont-image-compact}, $S_1$ is sequentially compact.
+    We know $[0,1]$ is sequentially compact by \cref{definition:heine-defn} and $S_1 \subset \mathbb{R}^2$, then by \cref{theorem:cont-image-seq-compact}, $S_1$ is sequentially compact.
 \end{example}
 \begin{theorem}{Min-Max Theorem}{min-max}
     Let $K \subseteq X$ and $K$ be sequentially compact.
@@ -2263,9 +2263,9 @@ Thus, different metrics on the same set may lead to a different convergence.
     If $f: K \to \mathbb{R}$ is continuous then there exists $x_{\min},x_{\max}\in K$ such that $f(x_{\min})=\inf\{|f(x)| \, x \in K\}$ and $f(x_{\max})=\sup\{|f(x)| \, x \in K\}$
 
     \begin{proof}
-        $K$ is sequentially compact and $f$ is continuous. From \cref{theorem:cont-image-compact}, $f(K)\subseteq \mathbb{R}$ is sequentially compact.
+        $K$ is sequentially compact and $f$ is continuous. From \cref{theorem:cont-image-seq-compact}, $f(K)\subseteq \mathbb{R}$ is sequentially compact.
 
-        But by \cref{theorem:compact-implies-complete},  $f(K)$ is then closed and bounded (as $\mathbb{R}$ is complete).
+        But by \cref{theorem:seq-compact-implies-complete},  $f(K)$ is then closed and bounded (as $\mathbb{R}$ is complete).
 
         In $\mathbb{R}$, if $A \subseteq \mathbb{R}$ is closed and bounded, the infimum and supremum of $A$ exist and are boundary points of $A$. (From Real Analysis).
 
@@ -2275,5 +2275,114 @@ Thus, different metrics on the same set may lead to a different convergence.
         such that $f(x_{\min})=\inf$ and $f(x_{\max})=\sup$
 \end{proof}
 \end{theorem}
+\pagebreak
+
+\lecture{Lecture XVI}{Viewer.aspx?id=b7c75c99-6542-4cf0-af62-b0bd00ac5e2b}{
+    Lecture Sixteen introduces us to the idea of open covers as a motivation for compactness. It then proves that all closed, bounded intervals in the real space are compact, as well as other properties. It concludes by providing the link between compactness, sequential compactness, complete and totally bounded.
+}{\DTMdisplaydate{2023}{11}{23}{Thursday}}
+\begin{definition}{Open cover}{open-cover-defn}
+    Let $(X,d)$ be a metric space and non-empty $K \subseteq K$.
+
+    Recall $T_d = \{\Omega \subseteq X : \Omega \text{ is open}\}$.
+
+    The open cover $\mathcal{C}$ for $K$ is  a collection of open sub-sets of $X$, that is, elements of $T_d$  for which $K \subseteq \bigcup\limits_{\Omega \in \mathcal{C}} \Omega$
+
+    A sub-cover of $K$ drawn from $\mathcal{C}$ is a sub-set $\mathcal{C}' \subseteq \mathcal{C}$ that also covers $K$.
+
+\end{definition}
+\begin{definition}{Open cover definition of compactness}{compact-defn}
+    A set $K \subseteq X$ is \emph{compact} if and only if \emph{every} open cover of $K$ has a finite sub-cover.
+
+    This does not say that it is sufficient to give a cover with a finite number of sets in the cover. 
+
+    To show a set is \emph{compact} requires us to take \emph{any} open cover and find a finite sub-cover.
+
+    To show a set is \emph{not compact} requires only one cover with infinite number of sets which has no finite sub-cover.
+\end{definition}
+\begin{example}{{\texorpdfstring{$\mathbb{N}\subseteq\mathbb{R}$}{The set of natutal numbers} is not compact}}{natural-not-compact}
+    Let $\mathcal{C}=\{(n-0.25, n+0.25); n \in \mathbb{N}\}$
+
+    Then $\mathbb{N} \subseteq \bigcup\limits_{n=1}^{\infty}(n-0.25, n+0.25)$
+
+    Choose any finite collection of natural numbers $n_1<n_2<\dots < n_k$. Then $n_k<n$ and $n\geq n_k +1$.
+
+    So $n_k+1, n_k+2, \dots \not\in \bigcup\limits_{i=1}^{k}(n_i-0.25, n_i+0.25)$ which means this open cover for $\mathbb{N}$ does not have a finite sub-cover.
+
+    Therefore, $\mathbb{N}$ is not compact.
+\end{example}
+\begin{theorem}{In \texorpdfstring{$\mathbb{R}$}{the real space} with the standard metric, all closed bounded intervals are compact}{real-closed-bounded-compact}
+\begin{proof}
+Consider $[a,b] \subseteq \mathbb{R}$
+
+        Take an arbitrary open cover of $[a,b]$, say $\mathcal{C}$.
+
+        Define
+        \begin{equation}
+            G = \{x\geq a : [a,x] \text{ is covered by a a finite collection of sets from }\mathcal{C}\}
+        \end{equation}
+        We need to show $b \in G$.
+
+        \emph{[obs. 1]} $G$ is not empty as $a \in G$.
+
+        \emph{[obs. 2]} If $x \in G$ then any $x'$ satisfying $a \leq x' \leq x$ is an element of $G$.
+
+        \emph{[obs. 3]} If $G$ is not bounded above then $b \in G$, and therefore we only consider $G$ which is bounded above.
+
+        \emph{[obs. 4]} $G$ bounded above $\implies \sup{G}=c<\infty$. If $c \in G$ and $b \leq c$ then $b \in G$ from \emph{[obs. 2]}.
+
+        All that is left is to show if $G$ is bounded and $\sup G = c \leq b$ leads to a contradiction.
+
+        \emph{[obs. 5]} If $[a,x]$ is covered by a finite collection of open sets from $\mathcal{C}$ then there exists $\delta>0$ such that $[a, x+\delta/2]$ is covered by the same collection.
+
+        So $c = \sup G$ and $c \leq b$. By definition of $\sup$, there exists $x \in G$ such that $c-\epsilon \leq x \leq b$.\\
+        So $[a,x]$ is covered by a finite sub-collection from $\mathcal{C}$ and there exists $U_x$ which is open and $x \in U_x$. This implies that there exists a $\delta$ such that $(x-\delta,x+\delta)\subseteq U_x$.
+
+        Choose $\epsilon^\prime$ sufficiently small that $c \in (x-\delta,x+\delta) \implies c+\epsilon^\prime \in (x-\delta,x+\delta) \implies [a, c+\epsilon^\prime ]$ is covered by a finite collection $\implies c \neq \sup G$.
+
+        Therefore, $c \leq b$ is not possible and hence $[a,b]$ is compact.
+    \end{proof}
+\end{theorem}
+\begin{theorem}{Continuous image of a compact set is compact}{cont-image-compact}
+    Let $f:X \to Y$ be continuous and $X$ and $Y$ be metric spaces.
+
+    If $K \subseteq X$ is compact then $f(K)\subseteq Y$ is also compact.
+\end{theorem}
+\begin{definition}{Totally bounded}{totally-bounded-defn}
+    Let $(X,d)$ be a metric space.
+
+    Then $K \subseteq X$ is \emph{totally bounded} if and only if, for any $\epsilon > 0$, a finite number of points $x_1, x_2, \dots x_k \in X$ for which $K \subseteq B(x_1, \epsilon)\cup B(x_2, \epsilon)\cup \dots \cup B(x_k, \epsilon)$.
+
+    The set of points $\{x_1, x_2, \dots x_k\}$ is an $\epsilon$-net for $K$.
+
+    Furthermore, \emph{totally bounded} $\implies$ \emph{bounded}, but not vice-versa.
+\end{definition}
+\begin{example}{Bounded does not imply totally bounded}{bounded-not-imply-totally-bounded}
+    Consider $\mathbb{N}$ in the metric space $(\mathbb{R}, \overline{d})$ where 
+    \begin{equation}
+        \overline{d}(x,y) = \min{\{|x-y|, 1\}}.
+    \end{equation}
+        $\mathbb{N}$ is bounded.\\
+        \emph{Why?} Take $B(0,2)$. For $n,m \in B(0,2)$, $d(m,n) = 0 \text{ if } n = m \text{ or } 1 \text{ if } n \neq m$. 
+
+        But $\mathbb{N}$ is not totally bounded.
+
+        Take any finite sub-set $F\subseteq \mathbb{N}$ and set $\epsilon=0.5$.
+
+        $B(x, \epsilon) = \{x\}$ if $x \in F$ so $\mathbb{N} \not\subseteq \bigcup\limits_{x \in F} B(x, \epsilon)$.
+        
+        Therefore, bounded does not imply 
+\end{example}
+\begin{theorem}{Link between compact, sequentially compact, complete and totally bounded}{seq-compact-compact-complete-bounded}
+    Let $(X,d)$ be a metric space.
+
+    A set $K \subseteq K$ is compact $\implies K$ is sequentially compact $\implies K$ complete, closed and \emph{totally bounded} $\implies K$ is compact.
+
+    \begin{proof}
+        Omitted.
+    \end{proof}
+\end{theorem}
+\pagebreak
+
+
 \end{document}
 
