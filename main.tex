@@ -34,6 +34,7 @@
 ]{hyperref}
 \usepackage[nameinlink]{cleveref}
 \usepackage{verbatim}
+\usepackage{pgfplots}
 
 % BEGIN DOCUMENT METADATA
 
@@ -2196,7 +2197,7 @@ Thus, different metrics on the same set may lead to a different convergence.
     So if we choose $\lambda>M(b-a)$ then $T$ is a contraction mapping by \cref{definition:cmt-defn}.
 \end{example}
 \pagebreak
-\end{comment}
+
 
 \lecture{Lecture XV}{Viewer.aspx?id=9419a0e2-ee15-4738-abd4-b0bb00ac6e18&query=21\%2F11}{
     Lecture Fifteen introduces the second of the 3 C's of Metric Spaces: Compactness, in the form of sequential compactness. It provides a list of properties for sequential compactness and creates a link between sequential compactness, continuity, completeness and boundedness.
@@ -2382,7 +2383,201 @@ Consider $[a,b] \subseteq \mathbb{R}$
     \end{proof}
 \end{theorem}
 \pagebreak
+\end{comment}
 
+\lecture{Lecture XVII}{Viewer.aspx?id=a94da4f7-8aed-490e-8ba3-b0c200ac4b97}{
+    Lecture Seventeen concludes the Metric Spaces course by discussing the last of the 3 C's of Metric Spaces: Connectedness. It discusses a number of definitions for (dis)connectedness, proving along the way that all real intervals are connected. It also defines path-connectedness and shows that it implies connectedness but not the inverse.
+}{\DTMdisplaydate{2023}{11}{28}{Tuesday}}
+\begin{definition}{Disconnected Metric Space}{disconnect-defn}
+    A metric space $(X,d)$ is \emph{disconnected} if and only if there exists a surjective continuous function $f : X \to \{0,1\}$.
 
+    The space is \emph{connected} if no such surjective function $f$ exists.
+\end{definition}
+\begin{definition}{Connected via disconnection}{connect-disconnect-defn}
+    A disconnection of $(X,d)$ is a pair of $A,B \subset X$ such that 
+    \begin{itemize}
+        \item[i)] $A\neq \emptyset$ and $B\neq\emptyset$
+        \item[ii)] $A,B$ are open
+        \item[iii)] $A \cap B = \emptyset$
+        \item[iv)] $X = A \cup B$ 
+    \end{itemize}
+    A space is \emph{connected} if it does not have a disconnection, otherwise it is \emph{disconnected}. 
+\end{definition}
+\begin{theorem}{The surjective function and disconnection are equivalent}{surjective-disconnect-equiv}
+    The surjective function defined in \cref{definition:disconnect-defn} is equivalent to the disconnection defined in \cref{definition:connect-disconnect-defn}.
+    \begin{proof}
+        \iffforward Assume there exists a surjective continuous function $f : X \to \{0,1\}$.
+
+        Then $f^{-1}(\{0\}) \neq \emptyset$ as $f$ is surjective, and $f^{-1}(\{0\})$ is open by continuity. Similar for $f^{-1}(\{1\})$: non-empty and open.
+
+        Clearly, $f^{-1}(\{0\}) \cap f^{-1}(\{1\}) = \emptyset$.
+
+        As $f$ is surjective, $f^{-1}(\{0\}) \cup f^{-1}(\{1\}) = X$.
+
+        Thus $f^{-1}(\{0\}), f^{-1}(\{1\})$ is a disconnection and $X$ is not connected.
+        \iffbackward Assume that there exists a disconnection of $X$ say ${A,B}$.
+
+        Define $f: X \to \{0,1\}$ by \begin{equation}
+        f(x) = 
+    \begin{cases}
+        0 & \text{if } x \in A\\
+        1 & \text{if } x \in B
+    \end{cases}
+\end{equation}
+    We need to show $f$ is continuous and surjective.
+
+    As $\{A,B\}$ is a disconnection, it implies $A,B \neq \emptyset$. Hence, there exists $a \in A$ such that $f(a)=0$ and $b\in B$ such that $f(b) = 1$. Thus, $f$ is surjective.
+
+    By definition of $f$, 
+    
+    $f^{-1}(\emptyset) = \emptyset$ which is open.
+
+    $f^{-1}(\{0\}) = A$, open by assumption.
+
+    $f^{-1}(\{1\}) = B$, open by assumption.
+
+    $f^{-1}(\{0,1\}) = X$, which is clopen therefore open.
+
+    Hence $f$ is continuous.
+    \end{proof}
+\end{theorem}
+\begin{definition}{Connected via clopen sets}{clopen-connect-defn}
+    In a \emph{connected space}, the only \emph{clopen} sets are $\emptyset$ and $X$.
+
+    Equivalently, $X$ is disconnected if and only if there exists a non-trivial clopen set $A \subset X$, $A \neq \emptyset$ and $A \neq X$.
+\end{definition}
+\begin{theorem}{The clopen definition and disconnection definition of connected sets are equivalent}{clopen-disconnect-equiv}
+    The clopen definition of connected sets \cref{definition:disconnect-defn} is equivalent to the disconnection definition of open sets \cref{definition:connect-disconnect-defn}.
+    \begin{proof}
+        \iffforward Assume there exists a non-trivial clopen sub-set $A \subset X$.
+
+        Then $\{A, A^c\}$ is a disconnection.
+        \emph{Why?}
+
+        \begin{align}
+            A \text{ clopen}&\implies A \text{ is open and closed}\\
+            &\implies A ^c\text{ is closed and open}\\
+            &\implies A^c \text{ is clopen}
+        \end{align}
+        \begin{equation}
+        A \neq X, A \neq \emptyset \implies A^c \neq \emptyset, A^c \neq X
+        \end{equation}
+        Clearly, $A \cap A^c = \emptyset$ and $A \cup A^c = X$, and hence $\{A, A^c\}$ is a disconnection.
+        
+        \iffbackward Assume $\{A, B\}$ is a disconnection of $X$ then $A$ and $B$ are non-trivial clopen sets of $X$ by similar argument.
+    \end{proof}
+\end{theorem}
+\begin{definition}{The three definitions of (dis)connected}{three-connect-defn}
+    Using the definitions above, there are 3 ways of looking at connected:
+    \begin{align} 
+        & \text{i) There exists a continuous, surjectve } f: X \to \{0,1\}\\
+        X \text{ is disconnected}  \iff &\text{ii) There exists a disconnection } \{A,B\} \text{ of } X\\
+        &\text{iii) There exists a non-trivial clopen set } A\subset X
+    \end{align}
+\end{definition}
+\begin{theorem}{Continuous image of a connected space is connected}{cont-image-connected}
+    If a metric space $(X,d)$ is connected and $f: X \to Y$ is continuous, then $f(X)\subseteq Y$ is also connected.
+    \begin{proof} By contradiction. 
+    
+    Assume $f(X)$ is disconnected. Then there exists a non-trivial clopen set $A \subset f(X)$, i.e., $A \neq \emptyset, A\neq X$ and $A$ is clopen.
+
+    Consider $\{f^{-1}(A), (f^{-1}(A))^c\}$. 
+
+    By continuity, $f^{-1}(A)$ is clopen $\implies (f^{-1}(A))^c$ is clopen. Clearly, $f^{-1}(A)\cap (f^{-1}(A))^c = \emptyset$.
+
+    Because $A$ is non-trivial, $f^{-1}(A) \neq X$ and thus, $\{f^{-1}(A), (f^{-1}(A))^c\}$ is a disconnection  and therefore, $(X,d)$ is disconnected, which is a contradiction.
+    \end{proof}
+\end{theorem}
+\begin{theorem}{In \texorpdfstring{$(\mathbb{R},d)$}{the real space with Euclidean metric}, any interval is connected.}{real-interval-connected}
+    We will prove this using contradiction.
+    \begin{proof}
+        Let $I$ be an interval which is disconnected.
+
+        Then there exists a disconnection $\{A,B\}$ of $I$.
+
+        Unless $I = [a]$ which is never disconnected, there exists $a<b$ such that $[a,b] \subset I$
+
+        Set $A' = A \cap [a,b]$ and $B' = B \cap [a,b]$
+
+        Without loss of generality, we can assume $a \in A'$ and $b \in B'$.
+
+        Let $c = \sup A' <b $. As $A' \subseteq [a,b]$ so is bounded by $b$ and $A$ is closed implies $A'$ is closed which implies $c \in A'$.
+
+        But $A$ is open implies that in the sub-space $[a,b], A'$ is open. As $c \in A'$ and $A$ is open, there exists $\delta>0$ such that $(c-\delta, c+\delta)\subset A'$, which means there exists $d \in A'$ such that $d>c =\sup A'$, which is a contradiction.
+    \end{proof}
+\end{theorem}
+\begin{definition}{Intermediate Value Theorem}{ivt-defn}
+    The Intermediate Value Theorem from classical analysis states that for a continuous function $f: \mathbb{R} \to \mathbb{R}$ and $x<y$ with $f(x)<f(y)$, then there exists a $z \in (x,y)$ such that $f(x)<f(z)<f(y)$ for any such $f(z)$.
+
+    The IVT is a result of \emph{connectedness}.
+\end{definition}
+\begin{definition}{Path-connected}{path-connect-defn}
+    A \emph{path} $\alpha$ is a continuous function $\alpha:[0,1]\to X$ where $X$ is a metric space.
+
+    The points $\alpha(0)$ and $\alpha(1)$ are end-points of the path.
+
+    A path is \emph{path-connected} if and only if there exists a path between any two points in the space.
+\end{definition}
+\begin{theorem}{Path-connected implies connected}{path-connect-implies-connect}
+    Path connected (\cref{definition:path-connect-defn}) implies connected (\cref{definition:three-connect-defn})
+    \begin{proof}
+        By contradiction.
+        
+        Let $(X,d)$ be path-connected. Assume $X$ is disconnected.
+
+        There exists a disconnection $\{A,B\}$ of $X$.
+
+        As $X$ is path-connected, there exists a continuous $\alpha:[0,1]\to X$ such that $\alpha(0)\in A$ and $\alpha(1) \in B$.
+
+        Consider $0 \in \alpha^{-1}(A)$. So, $\alpha^{-1}(A) \neq \emptyset$.
+
+        $A$ is open and $\alpha$ is continuous so $\alpha^{-1}(A)$ is also open. Further, $\alpha^{-1}(A) \neq [0,1]$ as $\alpha(1)\in B$ and $A \cap B = \emptyset$.
+
+        Thus $[0,1]$ is disconnected, which is a contradiction by \cref{theorem:real-interval-connected}.
+
+        Therefore, $X$ is connected.
+    \end{proof}
+\end{theorem}
+\begin{example}{Connected does not imply path-connected}{connect-not-imply-path}
+    The topologist's $\sin \frac{1}{x}$ curve provides a counter example.
+
+    $R = (0,1] \times f(x) = \sin \frac{1}{x}$
+
+    $L = \{0\} \times [-1,1]$
+
+    Therefore, $\Gamma = L \cup R$ is connected as $L$ is connected as it is an interval and $R$ is connected as it is the image of a connected set. 
+
+    However, we cannot find a path from $a \in L$ to $b \in R$ as the function oscillates infinitely frequently as $x \to 0$, and therefore, the path will have infinite length.
+
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{tikzpicture}[x=5cm]
+            \draw[->] (0,0) -- (1.1,0) node[right] {$x$};
+            \draw[->] (0,-1) -- (0,1.1) node[above] {$\sin (1/x)$};
+            \draw[blue,domain=0.01:1,samples=5000] plot (\x, {sin((1/\x)r)});
+        \end{tikzpicture}
+        \captionof{figure}{Unit Circle in $ d_1 $}%
+        \label{fig:d1-unit-circle}
+    \end{minipage}
+\end{example}
+\begin{definition}{Advantage of path-connectedness over connectedness}{path-connect-advantage}
+    The advantage of path-connectedness over connectedness is the notion of concatenation.
+
+    Suppose a continuous function $\alpha$ connects $x$ and $y$, and a continuous function $\beta$ connects $y$ and $z$. Then, the concatenation of $\alpha$ and $\beta$ is defined by $h = \beta \times \alpha$ where
+    \begin{equation}
+        h(t) = 
+        \begin{cases}
+            \alpha(2t) & t \in [0, 1/2]\\
+            \beta(2t-1) & t \in [1/2,1]
+        \end{cases}
+    \end{equation}
+\end{definition}
+\begin{theorem}{Continuous image of a path-connected set is path-connected}{cont-image-path-connect}
+    If a metric space $(X,d)$ is path-connected and $f: X \to Y$ is continuous, then $f(X)\subseteq Y$ is also path-connected.
+
+    \begin{proof}
+        Omitted.
+    \end{proof}
+\end{theorem}
 \end{document}
 
